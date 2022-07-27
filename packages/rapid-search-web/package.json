@@ -1,0 +1,19 @@
+{
+  "name": "rapid-search-web",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Alex Goodman <alexthegoodman@gmail.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/rapid-search-web.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  }
+}
