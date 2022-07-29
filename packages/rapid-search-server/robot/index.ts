@@ -1,17 +1,109 @@
 import got from "got";
 import * as cheerio from "cheerio";
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
+
+const testUrls = [
+  "https://en.wikipedia.org/wiki/List_of_hobbies",
+  "https://dmitripavlutin.com/parse-url-javascript/",
+];
 
 export const scanPage = async () => {
-  const pageUrl = "https://en.wikipedia.org/wiki/List_of_hobbies";
+  const pageUrl = testUrls[1];
+  const pageUrlData = new URL(pageUrl);
 
-  console.info("pageUrl", pageUrl);
+  console.info("pageUrl", pageUrl, pageUrlData.origin);
 
   const pageHtml = await got.get(pageUrl);
-
-  //   console.info("pageHtml", pageHtml);
-
   const $ = cheerio.load(pageHtml.body);
 
+  const {
+    titleContent,
+    descriptionContent,
+    tagsContent,
+    headerContent,
+    firstCopyContent,
+  } = extractPageInformation($);
+
+  savePageInformation(
+    pageUrlData,
+    titleContent,
+    descriptionContent,
+    tagsContent,
+    headerContent,
+    firstCopyContent
+  );
+
+  const pageLinksData = extractPageLinks($, pageUrlData.origin);
+
+  addLinksToQueue(pageLinksData);
+};
+
+const savePageInformation = async (
+  urlData: URL,
+  title: string,
+  description: string,
+  tags: string,
+  header1: string,
+  copy1: string
+) => {
+  await prisma.link.create({
+    data: {
+      url: urlData.href,
+      title,
+      description,
+      tags,
+      header1,
+      copy1,
+    },
+  });
+};
+
+const addLinksToQueue = async (pageLinksData: URL[]) => {
+  const saveData = pageLinksData.map((urlData) => {
+    return {
+      url: urlData.href,
+    };
+  });
+
+  await prisma.queue.createMany({
+    data: saveData,
+  });
+};
+
+const extractPageLinks = ($, origin) => {
+  const allPageLinks = $(`a`);
+
+  const pageLinksData: URL[] = [];
+  Array.from(allPageLinks).forEach((link, x) => {
+    const { href } = link.attribs;
+
+    try {
+      const linkData = new URL(href, origin);
+      // TODO: do not add links starting with ? (query) or # (hash)
+      let allow = true;
+      if (href !== "/" && linkData.pathname === "/") allow = false;
+      if (linkData.origin === "null") allow = false;
+      if (linkData.hash !== "") allow = false; // do not add links with hash
+      if (linkData.search !== "") allow = false; // do not add links w/query strings
+      //   if (linkData.pathname === "") allow = false;
+
+      if (allow) {
+        const nextIndex = pageLinksData.length;
+        console.info("pass link", linkData, linkData.pathname);
+        pageLinksData[nextIndex] = linkData;
+      }
+    } catch (error) {
+      // invalid url
+      console.error("error", href, error);
+    }
+  });
+
+  return pageLinksData;
+};
+
+const extractPageInformation = ($) => {
   const titleElement = $("title")[0];
   const descriptionElement = $(`meta[name="description"]`)[0];
   const tagsElement = $(`meta[name="tags"]`)[0];
@@ -42,7 +134,7 @@ export const scanPage = async () => {
       ? firstCopyElement.children[0]["data"]
       : null;
 
-  console.log(
+  console.info(
     "titleContent",
     titleContent,
     "descriptionContent",
@@ -54,4 +146,12 @@ export const scanPage = async () => {
     "firstCopyContent",
     firstCopyContent
   );
+
+  return {
+    titleContent,
+    descriptionContent,
+    tagsContent,
+    headerContent,
+    firstCopyContent,
+  };
 };
