@@ -1,43 +1,117 @@
 import got from "got";
 import * as cheerio from "cheerio";
 import { PrismaClient } from "@prisma/client";
+import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
-const testUrls = [
-  "https://en.wikipedia.org/wiki/List_of_hobbies",
-  "https://dmitripavlutin.com/parse-url-javascript/",
-];
+/**
+ * startScanQueue - get unfinished items from database queue, promise-loop through each item
+ * scanPage - check if link has been analyzed before, updates queue and creates link in database,
+ * parse workable page links and add to queue
+ */
 
-export const scanPage = async () => {
-  const pageUrl = testUrls[1];
+export const startScanQueue = async (initialUrls) => {
+  let queueItems = await prisma.queue.findMany({
+    where: {
+      analyzedDate: {
+        equals: null,
+      },
+    },
+  });
+
+  if (queueItems.length === 0) {
+    queueItems = initialUrls;
+  }
+
+  console.info("queueItems", queueItems);
+
+  let currentItem = 0;
+  const pageScanner = () =>
+    new Promise(async (resolve, reject) => {
+      const queueItem = queueItems[currentItem];
+      const finished = async () => {
+        currentItem++;
+
+        console.info("finished", queueItem.url, currentItem);
+
+        pageScanner();
+        resolve(true);
+      };
+
+      scanPage(queueItem, finished);
+    });
+
+  pageScanner();
+};
+
+const scanPage = async (queueItem, finished) => {
+  const pageUrl = queueItem.url;
   const pageUrlData = new URL(pageUrl);
 
   console.info("pageUrl", pageUrl, pageUrlData.origin);
 
-  const pageHtml = await got.get(pageUrl);
+  let pageHtml = null;
+  try {
+    pageHtml = await got.get(pageUrl);
+  } catch (error) {
+    console.error("pageHtml error", error);
+  }
+
+  if (pageHtml === null) {
+    finished();
+    return;
+  }
+
   const $ = cheerio.load(pageHtml.body);
 
-  const {
-    titleContent,
-    descriptionContent,
-    tagsContent,
-    headerContent,
-    firstCopyContent,
-  } = extractPageInformation($);
+  // TODO: Check if url exists in Links
+  const links = await prisma.link.findMany({
+    where: {
+      url: pageUrl,
+    },
+  });
 
-  savePageInformation(
-    pageUrlData,
-    titleContent,
-    descriptionContent,
-    tagsContent,
-    headerContent,
-    firstCopyContent
-  );
+  let allowPageAnalysis = true;
+  if (links.length > 0) allowPageAnalysis = false;
 
-  const pageLinksData = extractPageLinks($, pageUrlData.origin);
+  if (allowPageAnalysis) {
+    if (queueItem.id) {
+      await prisma.queue.update({
+        where: {
+          id: queueItem.id,
+        },
+        data: {
+          analyzedDate: DateTime.now().toISO(),
+        },
+      });
+    }
 
-  addLinksToQueue(pageLinksData);
+    const {
+      titleContent,
+      descriptionContent,
+      tagsContent,
+      headerContent,
+      firstCopyContent,
+    } = extractPageInformation($);
+
+    savePageInformation(
+      pageUrlData,
+      titleContent,
+      descriptionContent,
+      tagsContent,
+      headerContent,
+      firstCopyContent
+    );
+
+    const pageLinksData = extractPageLinks($, pageUrlData.origin);
+
+    addLinksToQueue(pageLinksData);
+
+    finished();
+  } else {
+    console.info("Page already analyzed");
+  }
 };
 
 const savePageInformation = async (
@@ -56,6 +130,7 @@ const savePageInformation = async (
       tags,
       header1,
       copy1,
+      lastAnalyzedDate: DateTime.now().toISO(),
     },
   });
 };
@@ -91,7 +166,7 @@ const extractPageLinks = ($, origin) => {
 
       if (allow) {
         const nextIndex = pageLinksData.length;
-        console.info("pass link", linkData, linkData.pathname);
+        console.info("pass link", linkData.pathname);
         pageLinksData[nextIndex] = linkData;
       }
     } catch (error) {

@@ -25,9 +25,11 @@
   "dependencies": {
     "@prisma/client": "^4.1.1",
     "cheerio": "1.0.0-rc.12",
-    "got": "11.0.0"
+    "got": "11.0.0",
+    "luxon": "^3.0.1"
   },
   "devDependencies": {
+    "@types/luxon": "^3.0.0",
     "@types/node": "^18.6.2",
     "prisma": "^4.1.1",
     "ts-node": "^10.9.1",
