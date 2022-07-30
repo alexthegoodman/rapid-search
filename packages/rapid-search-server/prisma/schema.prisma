@@ -27,6 +27,9 @@ model Link {
   header1     String?
   copy1       String?
 
+  normalTitle       String?
+  normalDescription String?
+
   lastAnalyzedDate DateTime @default(now())
 
   updatedAt DateTime @updatedAt

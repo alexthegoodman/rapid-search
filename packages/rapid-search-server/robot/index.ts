@@ -33,10 +33,12 @@ export const startScanQueue = async (initialUrls) => {
       const finished = async () => {
         currentItem++;
 
-        console.info("finished", queueItem.url, currentItem);
+        if (currentItem < queueItems.length) {
+          console.info("finished", queueItem.url, currentItem);
 
-        pageScanner();
-        resolve(true);
+          pageScanner();
+          resolve(true);
+        }
       };
 
       scanPage(queueItem, finished);
@@ -122,6 +124,9 @@ const savePageInformation = async (
   header1: string,
   copy1: string
 ) => {
+  const normalTitle = normalizeText(title);
+  const normalDescription = normalizeText(description);
+
   await prisma.link.create({
     data: {
       url: urlData.href,
@@ -130,9 +135,24 @@ const savePageInformation = async (
       tags,
       header1,
       copy1,
+
+      normalTitle,
+      normalDescription,
+
       lastAnalyzedDate: DateTime.now().toISO(),
     },
   });
+};
+
+export const normalizeText = (text) => {
+  let newText = text;
+
+  if (newText) {
+    newText = text.toLowerCase();
+    newText.replace(/[^\w\s\d]+/gi, "-"); // remove special chars
+  }
+
+  return newText;
 };
 
 const addLinksToQueue = async (pageLinksData: URL[]) => {
@@ -166,7 +186,7 @@ const extractPageLinks = ($, origin) => {
 
       if (allow) {
         const nextIndex = pageLinksData.length;
-        console.info("pass link", linkData.pathname);
+        // console.info("pass link", linkData.pathname);
         pageLinksData[nextIndex] = linkData;
       }
     } catch (error) {

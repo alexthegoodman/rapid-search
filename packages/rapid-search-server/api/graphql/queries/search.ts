@@ -1,4 +1,5 @@
 import { extendType, nonNull, stringArg } from "nexus";
+import { normalizeText } from "../../../robot";
 import { Context } from "../../context";
 
 export const SearchQuery = extendType({
@@ -10,10 +11,12 @@ export const SearchQuery = extendType({
         query: nonNull(stringArg()),
       },
       resolve: async (_, { query }, { prisma }: Context, x) => {
+        const normalQuery = normalizeText(query);
+
         const linkMatches = await prisma.link.findMany({
           where: {
-            title: {
-              contains: query,
+            normalTitle: {
+              contains: normalQuery,
             },
           },
         });
