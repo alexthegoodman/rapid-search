@@ -35,3 +35,13 @@ model Link {
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }
+
+model SearchQuery {
+  id String @id @default(uuid()) @unique
+
+  noramlText  String
+  volume      Int
+
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}

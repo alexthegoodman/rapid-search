@@ -1,12 +1,6 @@
 import { startApolloServer } from "./api";
-import { startScanQueue } from "./robot";
+import { startCrawler, startScanQueue } from "./crawler";
 
-startApolloServer();
+// startApolloServer();
 
-// Start Robot:
-// const testUrls = [
-//   { id: null, url: "https://en.wikipedia.org/wiki/List_of_hobbies" },
-//   { id: null, url: "https://dmitripavlutin.com/parse-url-javascript/" },
-// ];
-
-// startScanQueue(testUrls);
+startCrawler();

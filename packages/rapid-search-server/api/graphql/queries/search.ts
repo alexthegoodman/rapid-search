@@ -1,5 +1,5 @@
 import { extendType, nonNull, stringArg } from "nexus";
-import { normalizeText } from "../../../robot";
+import { normalizeText } from "../../../crawler";
 import { Context } from "../../context";
 
 export const SearchQuery = extendType({
@@ -13,6 +13,36 @@ export const SearchQuery = extendType({
       resolve: async (_, { query }, { prisma }: Context, x) => {
         const normalQuery = normalizeText(query);
 
+        console.info("normalQuery", normalQuery);
+
+        // add query to database
+        const matchingQuery = await prisma.searchQuery.findFirst({
+          where: {
+            noramlText: {
+              equals: normalQuery,
+            },
+          },
+        });
+
+        if (matchingQuery) {
+          await prisma.searchQuery.update({
+            where: {
+              id: matchingQuery.id,
+            },
+            data: {
+              volume: matchingQuery.volume + 1,
+            },
+          });
+        } else {
+          await prisma.searchQuery.create({
+            data: {
+              noramlText: normalQuery,
+              volume: 1,
+            },
+          });
+        }
+
+        // get search results
         const linkMatches = await prisma.link.findMany({
           where: {
             normalTitle: {
