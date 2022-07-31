@@ -13,9 +13,7 @@ const prisma = new PrismaClient();
  */
 
 export const startCrawler = () => {
-  const initialUrls = [
-    { id: null, url: "https://en.wikipedia.org/wiki/List_of_hobbies" },
-  ];
+  const initialUrls = [{ id: null, url: "https://techcrunch.com" }];
 
   const result = startScanWorkers(initialUrls);
 

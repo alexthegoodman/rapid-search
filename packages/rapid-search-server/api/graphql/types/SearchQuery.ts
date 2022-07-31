@@ -29,10 +29,70 @@ export const SearchQueryType = objectType({
       resolve: async (searchQuery, __, context: Context) => {
         return await context.prisma.link.findMany({
           where: {
-            normalTitle: {
-              contains: searchQuery.normalText,
-            },
+            OR: [
+              {
+                AND: [
+                  {
+                    normalTitle: {
+                      contains: searchQuery.subject1
+                        ? searchQuery.subject1
+                        : "",
+                    },
+                  },
+                  {
+                    normalTitle: {
+                      contains: searchQuery.subject2
+                        ? searchQuery.subject2
+                        : "",
+                    },
+                  },
+                  {
+                    normalTitle: {
+                      contains: searchQuery.subject3
+                        ? searchQuery.subject3
+                        : "",
+                    },
+                  },
+                ],
+              },
+              {
+                AND: [
+                  {
+                    normalDescription: {
+                      contains: searchQuery.subject1
+                        ? searchQuery.subject1
+                        : "",
+                    },
+                  },
+                  {
+                    normalDescription: {
+                      contains: searchQuery.subject2
+                        ? searchQuery.subject2
+                        : "",
+                    },
+                  },
+                  {
+                    normalDescription: {
+                      contains: searchQuery.subject3
+                        ? searchQuery.subject3
+                        : "",
+                    },
+                  },
+                ],
+              },
+              // {
+              //   normalTitle: {
+              //     contains: searchQuery.normalText,
+              //   },
+              // },
+              // {
+              //   normalDescription: {
+              //     contains: searchQuery.normalText,
+              //   },
+              // },
+            ],
           },
+          take: 5,
         });
       },
     });

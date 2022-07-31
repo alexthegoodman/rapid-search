@@ -82,6 +82,7 @@ export const SearchQuery = extendType({
           orderBy: {
             updatedAt: "desc",
           },
+          take: 5,
         });
 
         console.info("searchQueries", searchQueries);
