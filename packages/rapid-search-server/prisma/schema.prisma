@@ -39,8 +39,12 @@ model Link {
 model SearchQuery {
   id String @id @default(uuid()) @unique
 
-  noramlText  String
+  normalText  String
   volume      Int
+
+  subject1 String?
+  subject2 String?
+  subject3 String?
 
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())

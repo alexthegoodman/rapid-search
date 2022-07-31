@@ -19,5 +19,14 @@ type Link {
 }
 
 type Query {
-  search(query: String!): [Link]
+  searchQueries(query: String!): [SearchQuery]
+}
+
+type SearchQuery {
+  links: [Link]
+  normalText: String
+  subject1: String
+  subject2: String
+  subject3: String
+  volume: Int
 }

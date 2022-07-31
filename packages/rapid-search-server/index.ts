@@ -1,6 +1,6 @@
 import { startApolloServer } from "./api";
-import { startCrawler, startScanQueue } from "./crawler";
+import { startCrawler } from "./crawler";
 
-// startApolloServer();
+startApolloServer();
 
-startCrawler();
+// startCrawler();

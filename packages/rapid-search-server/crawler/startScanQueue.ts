@@ -23,6 +23,11 @@ export const startScanQueue = async () => {
 
   if (queueItems.length === 0) {
     queueItems = workerData.initialUrls;
+
+    if (workerData.workerId > 1) {
+      // cancel all workers when first seeding db
+      return;
+    }
   }
 
   console.info("startScanQueue queueItems", queueItems);

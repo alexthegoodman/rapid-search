@@ -58,6 +58,13 @@ export interface NexusGenObjects {
     url?: string | null; // String
   }
   Query: {};
+  SearchQuery: { // root type
+    normalText?: string | null; // String
+    subject1?: string | null; // String
+    subject2?: string | null; // String
+    subject3?: string | null; // String
+    volume?: number | null; // Int
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -77,7 +84,15 @@ export interface NexusGenFieldTypes {
     url: string | null; // String
   }
   Query: { // field return type
-    search: Array<NexusGenRootTypes['Link'] | null> | null; // [Link]
+    searchQueries: Array<NexusGenRootTypes['SearchQuery'] | null> | null; // [SearchQuery]
+  }
+  SearchQuery: { // field return type
+    links: Array<NexusGenRootTypes['Link'] | null> | null; // [Link]
+    normalText: string | null; // String
+    subject1: string | null; // String
+    subject2: string | null; // String
+    subject3: string | null; // String
+    volume: number | null; // Int
   }
 }
 
@@ -88,13 +103,21 @@ export interface NexusGenFieldTypeNames {
     url: 'String'
   }
   Query: { // field return type name
-    search: 'Link'
+    searchQueries: 'SearchQuery'
+  }
+  SearchQuery: { // field return type name
+    links: 'Link'
+    normalText: 'String'
+    subject1: 'String'
+    subject2: 'String'
+    subject3: 'String'
+    volume: 'Int'
   }
 }
 
 export interface NexusGenArgTypes {
   Query: {
-    search: { // args
+    searchQueries: { // args
       query: string; // String!
     }
   }

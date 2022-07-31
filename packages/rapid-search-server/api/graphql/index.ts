@@ -1,3 +1,4 @@
 export * from "./types/Link";
+export * from "./types/SearchQuery";
 
-export * from "./queries/search";
+export * from "./queries/searchQueries";
