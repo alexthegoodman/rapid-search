@@ -1,0 +1,13 @@
+@import "../components/FormInput/FormInput";
+@import "../components/FormMessage/FormMessage";
+@import "../components/SearchInput/SearchInput";
+@import "../components/SimpleErrorMessage/SimpleErrorMessage";
+
+@import "../components/SearchQuery/SearchQuery";
+
+$tablet: 720px;
+
+.container {
+  width: $tablet;
+  margin: 0 auto;
+}

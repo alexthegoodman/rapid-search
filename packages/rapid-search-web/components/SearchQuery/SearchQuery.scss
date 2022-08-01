@@ -1,0 +1,32 @@
+.searchQuery {
+  margin-bottom: 25px;
+
+  .searchQueryInner {
+    .searchQueryHeader {
+      margin-bottom: 15px;
+
+      .searchQueryHeadline {
+        font-size: 24px;
+      }
+    }
+    .searchQueryLinks {
+      padding-left: 15px;
+
+      .searchQueryLinksInner {
+        border: 1px grey solid;
+
+        a {
+          display: block;
+          font-size: 18px;
+          padding: 10px;
+          border-bottom: 1px grey solid;
+          text-decoration: none;
+
+          &:last-of-type {
+            border: none;
+          }
+        }
+      }
+    }
+  }
+}

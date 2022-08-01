@@ -1,0 +1,23 @@
+.searchForm {
+  .searchFormInner {
+    .form {
+      position: relative;
+      display: flex;
+      flex-direction: row;
+
+      .searchButton {
+        width: 150px;
+        height: 60px;
+      }
+      .formInput {
+        width: 100%;
+
+        input {
+          text-align: center;
+          font-weight: 400;
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
