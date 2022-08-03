@@ -11,19 +11,40 @@
     }
     .searchQueryLinks {
       padding-left: 15px;
+      background: white;
 
       .searchQueryLinksInner {
-        border: 1px grey solid;
+        border: 1px lightgrey solid;
 
         a {
           display: block;
           font-size: 18px;
-          padding: 10px;
-          border-bottom: 1px grey solid;
+          padding: 20px;
+          border-bottom: 1px lightgrey solid;
           text-decoration: none;
 
           &:last-of-type {
             border: none;
+          }
+
+          &:nth-of-type(2n) {
+            background: #efefef;
+          }
+
+          .title,
+          .description {
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+          .title {
+            font-size: 18px;
+            color: #0453ff;
+          }
+          .description {
+            font-size: 15px;
+            color: #050505;
           }
         }
       }

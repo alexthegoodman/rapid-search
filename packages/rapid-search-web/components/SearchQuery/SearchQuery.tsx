@@ -16,7 +16,8 @@ const SearchQuery: React.FC<SearchQueryProps> = ({ searchQuery }) => {
             {searchQuery.links.map((link, x) => {
               return (
                 <a href={link.url} target="_blank">
-                  {link.title}
+                  <span className="title">{link.title}</span>
+                  <span className="description">{link.description}</span>
                 </a>
               );
             })}
