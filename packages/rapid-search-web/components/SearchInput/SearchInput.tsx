@@ -23,7 +23,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           <FormInput
             type="search"
             name="search"
-            placeholder="Search interests..."
+            placeholder="Search web..."
             register={register}
             errors={errors}
             validation={{ required: false }}

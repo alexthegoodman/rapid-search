@@ -1,20 +1,26 @@
 .searchQuery {
-  margin-bottom: 25px;
+  margin-bottom: 40px;
+  background: darkgrey;
 
   .searchQueryInner {
     .searchQueryHeader {
-      margin-bottom: 15px;
+      padding-left: 15px;
+      position: relative;
+      top: 5px;
 
       .searchQueryHeadline {
         font-size: 24px;
       }
     }
     .searchQueryLinks {
-      padding-left: 15px;
-      background: white;
+      //   padding-left: 15px;
+      position: relative;
+      top: 15px;
+      left: 15px;
 
       .searchQueryLinksInner {
         border: 1px lightgrey solid;
+        background: white;
 
         a {
           display: block;
