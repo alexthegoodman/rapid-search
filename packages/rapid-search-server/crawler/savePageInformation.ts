@@ -9,25 +9,36 @@ export const savePageInformation = async (
   urlData: URL,
   title: string | null,
   description: string | null,
-  tags: string | null,
   header1: string | null,
   copy1: string | null
 ) => {
   const normalTitle = normalizeText(title);
   const normalDescription = normalizeText(description);
 
-  await prisma.link.create({
+  await prisma.page.create({
     data: {
       url: urlData.href,
-      title,
-      description,
-      tags,
-      header1,
-      copy1,
-
-      normalTitle,
-      normalDescription,
-
+      domain: {
+        connectOrCreate: {
+          where: {
+            content: "",
+          },
+          create: {
+            content: "",
+          },
+        },
+      },
+      loadSpeedScore: "",
+      topicClassification: {
+        connect: {
+          id: "",
+        },
+      },
+      topicScore: "",
+      metaTitle: title,
+      metaDescription: description,
+      headline: header1,
+      excerpt: copy1,
       lastAnalyzedDate: DateTime.now().toISO(),
     },
   });

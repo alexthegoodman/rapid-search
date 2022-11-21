@@ -7,9 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Queue {
+model Backlink {
   id    String @id @default(uuid()) @unique
-  url   String
+  
+  targetUrl   String
+  targetDomain     Domain @relation(name: "targetDomain", fields: [targetDomainId], references: [id])
+  targetDomainId   String
+
+  originUrl   String
+  originDomain Domain @relation(name: "originDomain", fields: [originDomainId], references: [id])
+  originDomainId   String
 
   analyzedDate DateTime?
 
@@ -17,18 +24,37 @@ model Queue {
   createdAt DateTime @default(now())
 }
 
-model Link {
+model Domain {
   id String @id @default(uuid()) @unique
 
-  url         String @unique
-  title       String?
-  description String?
-  tags        String?
-  header1     String?
-  copy1       String?
+  content String @unique
 
-  normalTitle       String?
-  normalDescription String?
+  backlinks Backlink[] @relation("targetDomain")
+  outboundLinks Backlink[] @relation("originDomain")
+  pages     Page[]
+
+  updatedAt DateTime @updatedAt 
+  createdAt DateTime @default(now())
+}
+
+model Page {
+  id String @id @default(uuid()) @unique
+
+  url           String @unique
+  domain        Domain @relation(fields: [domainId], references: [id])
+  domainId      String
+  metaTitle         String?
+  metaDescription   String?  
+  // some excerpts can be fetched at runtime
+  // but this is for speed, convenience, and low-storage
+  headline     String? 
+  excerpt      String? // crawler should stored minimum of 140 chars
+
+  loadSpeedScore        String
+  topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])
+  topicClassificationId String
+  topicScore            String
+  // backlinkScore caclulated by domain backlinks
 
   lastAnalyzedDate DateTime @default(now())
 
@@ -36,16 +62,25 @@ model Link {
   createdAt DateTime @default(now())
 }
 
-model SearchQuery {
-  id String @id @default(uuid()) @unique
+model Interest {
+  id       String   @id @default(uuid()) @unique
+  name     String
+  generatedInterestSlug String @default("") @unique
 
-  normalText  String
-  volume      Int
+  pages       Page[]  
+  categories  Category[]
 
-  subject1 String?
-  subject2 String?
-  subject3 String?
+  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now())
+}
 
+model Category {
+  id       String   @id @default(uuid()) @unique
+  name     String
+  generatedCategorySlug String @default("") @unique
+
+  interests Interest[]
+  
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }

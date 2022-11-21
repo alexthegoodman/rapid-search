@@ -6,12 +6,12 @@ const { workerData } = require("worker_threads");
 const prisma = new PrismaClient();
 
 export const startScanQueue = async () => {
-  console.info("workerData", workerData, parseInt(workerData.workerId) - 1);
+  // console.info("workerData", workerData, parseInt(workerData.workerId) - 1);
   const skipItems = (workerData.workerId - 1) * 100;
 
   console.info("startScanQueue", skipItems);
 
-  let queueItems = await prisma.queue.findMany({
+  let queueItems = await prisma.backlink.findMany({
     where: {
       analyzedDate: {
         equals: null,
@@ -30,7 +30,7 @@ export const startScanQueue = async () => {
     }
   }
 
-  console.info("startScanQueue queueItems", queueItems);
+  // console.info("startScanQueue queueItems", queueItems);
 
   let currentItem = 0;
   const pageScanner = () =>
@@ -42,7 +42,7 @@ export const startScanQueue = async () => {
         if (currentItem < queueItems.length) {
           console.info(
             "finished",
-            queueItem.url,
+            queueItem.targetUrl,
             currentItem,
             workerData.workerId
           );
@@ -52,7 +52,13 @@ export const startScanQueue = async () => {
         }
       };
 
-      scanPage(queueItem, finished);
+      const scanDelay = process.env.NODE_ENV === "production" ? 0 : 2000;
+
+      console.info("scanpage delay", queueItem.targetUrl, scanDelay);
+
+      setTimeout(() => {
+        scanPage(queueItem, finished);
+      }, scanDelay);
     });
 
   pageScanner();

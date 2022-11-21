@@ -31,7 +31,7 @@ export const scanPage = async (queueItem: any, finished: () => void) => {
   const $ = cheerio.load(pageHtml.body);
 
   // TODO: Check if url exists in Links
-  const links = await prisma.link.findMany({
+  const links = await prisma.page.findMany({
     where: {
       url: pageUrl,
     },
@@ -42,7 +42,7 @@ export const scanPage = async (queueItem: any, finished: () => void) => {
 
   if (allowPageAnalysis) {
     if (queueItem.id) {
-      await prisma.queue.update({
+      await prisma.backlink.update({
         where: {
           id: queueItem.id,
         },
@@ -64,7 +64,6 @@ export const scanPage = async (queueItem: any, finished: () => void) => {
       pageUrlData,
       titleContent,
       descriptionContent,
-      tagsContent,
       headerContent,
       firstCopyContent
     );
