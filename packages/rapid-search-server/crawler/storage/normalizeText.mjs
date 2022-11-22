@@ -1,5 +1,5 @@
-export const normalizeText = (text: string | null) => {
-  let newText: string | null = text;
+export const normalizeText = (text) => {
+  let newText = text;
 
   if (newText) {
     newText = text ? text.toLowerCase() : text;

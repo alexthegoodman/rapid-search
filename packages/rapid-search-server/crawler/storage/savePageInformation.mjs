@@ -12,7 +12,8 @@ export const savePageInformation = async (
   header1,
   copy1
 ) => {
-  await prisma.page.create({
+  console.info("urlData.hostname", urlData.hostname);
+  return await prisma.page.create({
     data: {
       url: urlData.href,
       domain: {
@@ -28,7 +29,7 @@ export const savePageInformation = async (
       loadSpeedScore: "",
       topicClassification: {
         connect: {
-          id: "",
+          generatedInterestSlug: "Beer-Tasting",
         },
       },
       topicScore: "",

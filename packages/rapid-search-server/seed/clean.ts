@@ -21,13 +21,19 @@ export default async function clean() {
 
   // await prisma.raw("TRUNCATE AnnotationMeta;");
 
-  await prisma.searchQuery.deleteMany({
+  await prisma.backlink.deleteMany({
     where: { id: { not: "" } },
   });
-  await prisma.queue.deleteMany({
+  await prisma.page.deleteMany({
     where: { id: { not: "" } },
   });
-  await prisma.link.deleteMany({
+  await prisma.domain.deleteMany({
+    where: { id: { not: "" } },
+  });
+  await prisma.interest.deleteMany({
+    where: { id: { not: "" } },
+  });
+  await prisma.category.deleteMany({
     where: { id: { not: "" } },
   });
 }

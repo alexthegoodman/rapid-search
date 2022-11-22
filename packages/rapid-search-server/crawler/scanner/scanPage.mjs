@@ -11,7 +11,7 @@ import { savePageInformation } from "../storage/savePageInformation.mjs";
 const prisma = new PrismaClient();
 
 export const scanPage = async (queueItem, finished) => {
-  const pageUrl = queueItem.url;
+  const pageUrl = queueItem.targetUrl;
   const pageUrlData = new URL(pageUrl);
 
   console.info("pageUrl", pageUrl, pageUrlData.origin);
@@ -60,7 +60,7 @@ export const scanPage = async (queueItem, finished) => {
       firstCopyContent,
     } = extractPageInformation($);
 
-    savePageInformation(
+    await savePageInformation(
       pageUrlData,
       titleContent,
       descriptionContent,

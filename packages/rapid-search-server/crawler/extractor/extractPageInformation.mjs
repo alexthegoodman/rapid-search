@@ -1,4 +1,4 @@
-import { CheerioAPI } from "cheerio";
+// import { CheerioAPI } from "cheerio";
 
 export const extractPageInformation = ($) => {
   const titleElement = $("title")[0];

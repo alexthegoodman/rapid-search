@@ -7,7 +7,7 @@ import { startScanWorkers } from "./scanner/startScanWorkers";
 const prisma = new PrismaClient();
 
 export const startCrawler = () => {
-  const initialUrls = [{ id: null, url: "https://techcrunch.com" }];
+  const initialUrls = [{ id: null, targetUrl: "https://techcrunch.com" }];
 
   const result = startScanWorkers(initialUrls);
 

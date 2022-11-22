@@ -3,34 +3,39 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const addBacklinks = async (pageUrlData, pageLinksData) => {
-  pageLinksData.forEach(async (urlData) => {
-    const domain = urlData.hostname;
+  for (const urlData of pageLinksData) {
+    const originDomain = pageUrlData.hostname;
+    const targetDomain = urlData.hostname;
+    const originUrl = pageUrlData.toString();
+    const targetUrl = urlData.toString();
+
+    // console.info("add backlink", originUrl, targetUrl);
 
     await prisma.backlink.create({
       data: {
-        originUrl: pageUrlData.toString(),
+        originUrl,
         originDomain: {
           connectOrCreate: {
             where: {
-              content: pageUrlData.hostname,
+              content: originDomain,
             },
             create: {
-              content: pageUrlData.hostname,
+              content: originDomain,
             },
           },
         },
-        targetUrl: urlData.toString(),
+        targetUrl,
         targetDomain: {
           connectOrCreate: {
             where: {
-              content: domain,
+              content: targetDomain,
             },
             create: {
-              content: domain,
+              content: targetDomain,
             },
           },
         },
       },
     });
-  });
+  }
 };

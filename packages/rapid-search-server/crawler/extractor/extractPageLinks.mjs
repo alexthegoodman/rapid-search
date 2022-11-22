@@ -1,4 +1,4 @@
-import { CheerioAPI } from "cheerio";
+// import { CheerioAPI } from "cheerio";
 
 export const extractPageLinks = ($, origin) => {
   const allPageLinks = $(`a`);
