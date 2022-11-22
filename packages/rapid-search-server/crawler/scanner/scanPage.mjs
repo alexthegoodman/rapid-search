@@ -16,6 +16,17 @@ export const scanPage = async (queueItem, finished) => {
 
   console.info("pageUrl", pageUrl, pageUrlData.origin);
 
+  if (queueItem.id) {
+    await prisma.backlink.update({
+      where: {
+        id: queueItem.id,
+      },
+      data: {
+        analyzedDate: DateTime.now().toISO(),
+      },
+    });
+  }
+
   let pageHtml = null;
   try {
     pageHtml = await got.get(pageUrl);
@@ -41,17 +52,6 @@ export const scanPage = async (queueItem, finished) => {
   if (links.length > 0) allowPageAnalysis = false;
 
   if (allowPageAnalysis) {
-    if (queueItem.id) {
-      await prisma.backlink.update({
-        where: {
-          id: queueItem.id,
-        },
-        data: {
-          analyzedDate: DateTime.now().toISO(),
-        },
-      });
-    }
-
     const { titleContent, descriptionContent, headlineText, excerpt } =
       extractPageInformation($);
 

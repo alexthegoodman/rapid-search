@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { scanPage } from "./scanPage.mjs";
 
 // const { workerData } = require("worker_threads");
-import { workerData } from "worker_threads";
+import { workerData, parentPort } from "worker_threads";
 
 const prisma = new PrismaClient();
 
@@ -53,6 +53,9 @@ export const startScanQueue = async () => {
 
           pageScanner();
           resolve(true);
+        } else {
+          console.info("workerFinished");
+          parentPort.postMessage("workerFinished");
         }
       };
 
