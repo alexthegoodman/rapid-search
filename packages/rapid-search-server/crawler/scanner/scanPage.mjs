@@ -52,20 +52,15 @@ export const scanPage = async (queueItem, finished) => {
       });
     }
 
-    const {
-      titleContent,
-      descriptionContent,
-      tagsContent,
-      headerContent,
-      firstCopyContent,
-    } = extractPageInformation($);
+    const { titleContent, descriptionContent, headlineText, excerpt } =
+      extractPageInformation($);
 
     await savePageInformation(
       pageUrlData,
       titleContent,
       descriptionContent,
-      headerContent,
-      firstCopyContent
+      headlineText,
+      excerpt
     );
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);

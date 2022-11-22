@@ -44,7 +44,7 @@ export const startScanQueue = async () => {
 
         if (currentItem < queueItems.length) {
           console.info(
-            "finished",
+            "-------- finished",
             workerData.workerId,
             queueItem.targetUrl,
             currentItem,
@@ -58,13 +58,8 @@ export const startScanQueue = async () => {
 
       const scanDelay = process.env.NODE_ENV === "production" ? 0 : 2000;
 
-      console.info("--------");
-      console.info(
-        "ScanPage (delay)",
-        workerData.workerId,
-        queueItem.targetUrl,
-        scanDelay
-      );
+      console.info("-------- start", workerData.workerId);
+      console.info("ScanPage (delay)", queueItem.targetUrl, scanDelay);
 
       setTimeout(() => {
         scanPage(queueItem, finished);

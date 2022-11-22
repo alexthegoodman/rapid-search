@@ -9,8 +9,8 @@ export const savePageInformation = async (
   urlData,
   title,
   description,
-  header1,
-  copy1
+  headline,
+  excerpt
 ) => {
   console.info("urlData.hostname", urlData.hostname);
   return await prisma.page.create({
@@ -35,8 +35,8 @@ export const savePageInformation = async (
       topicScore: "",
       metaTitle: title,
       metaDescription: description,
-      headline: header1,
-      excerpt: copy1,
+      headline,
+      excerpt,
       lastAnalyzedDate: DateTime.now().toISO(),
     },
   });
