@@ -1,9 +1,9 @@
 import { CheerioAPI } from "cheerio";
 
-export const extractPageLinks = ($: CheerioAPI, origin: string) => {
+export const extractPageLinks = ($, origin) => {
   const allPageLinks = $(`a`);
 
-  const pageLinksData: URL[] = [];
+  const pageLinksData = [];
   Array.from(allPageLinks).forEach((link, x) => {
     const { href } = link.attribs;
 

@@ -1,6 +1,6 @@
 import { CheerioAPI } from "cheerio";
 
-export const extractPageInformation = ($: CheerioAPI) => {
+export const extractPageInformation = ($) => {
   const titleElement = $("title")[0];
   const descriptionElement = $(`meta[name="description"]`)[0];
   const tagsElement = $(`meta[name="tags"]`)[0];
@@ -31,18 +31,20 @@ export const extractPageInformation = ($: CheerioAPI) => {
       ? firstCopyElement.children[0]["data"]
       : null;
 
-  console.info(
-    "titleContent",
-    titleContent,
-    "descriptionContent",
-    descriptionContent,
-    "tagsContent",
-    tagsContent,
-    "headerContent",
-    headerContent,
-    "firstCopyContent",
-    firstCopyContent
-  );
+  console.info("titleContent", titleContent);
+
+  // console.info(
+  //   "titleContent",
+  //   titleContent,
+  //   "descriptionContent",
+  //   descriptionContent,
+  //   "tagsContent",
+  //   tagsContent,
+  //   "headerContent",
+  //   headerContent,
+  //   "firstCopyContent",
+  //   firstCopyContent
+  // );
 
   return {
     titleContent,

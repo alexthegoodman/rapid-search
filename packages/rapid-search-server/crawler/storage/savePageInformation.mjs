@@ -1,30 +1,27 @@
 import { PrismaClient } from "@prisma/client";
 import { DateTime } from "luxon";
 
-import { normalizeText } from "./normalizeText";
+import { normalizeText } from "./normalizeText.mjs";
 
 const prisma = new PrismaClient();
 
 export const savePageInformation = async (
-  urlData: URL,
-  title: string | null,
-  description: string | null,
-  header1: string | null,
-  copy1: string | null
+  urlData,
+  title,
+  description,
+  header1,
+  copy1
 ) => {
-  const normalTitle = normalizeText(title);
-  const normalDescription = normalizeText(description);
-
   await prisma.page.create({
     data: {
       url: urlData.href,
       domain: {
         connectOrCreate: {
           where: {
-            content: "",
+            content: urlData.hostname,
           },
           create: {
-            content: "",
+            content: urlData.hostname,
           },
         },
       },

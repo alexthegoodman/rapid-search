@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { scanPage } from "./scanPage";
+import { scanPage } from "./scanPage.mjs";
 
 const { workerData } = require("worker_threads");
 

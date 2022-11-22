@@ -3,14 +3,14 @@ import got from "got";
 import * as cheerio from "cheerio";
 import { DateTime } from "luxon";
 
-import { addLinksToQueue } from "./addLinksToQueue";
-import { extractPageInformation } from "./extractPageInformation";
-import { extractPageLinks } from "./extractPageLinks";
-import { savePageInformation } from "./savePageInformation";
+import { addBacklinks } from "../storage/addBacklinks.mjs";
+import { extractPageInformation } from "../extractor/extractPageInformation.mjs";
+import { extractPageLinks } from "../extractor/extractPageLinks.mjs";
+import { savePageInformation } from "../storage/savePageInformation.mjs";
 
 const prisma = new PrismaClient();
 
-export const scanPage = async (queueItem: any, finished: () => void) => {
+export const scanPage = async (queueItem, finished) => {
   const pageUrl = queueItem.url;
   const pageUrlData = new URL(pageUrl);
 
@@ -70,7 +70,7 @@ export const scanPage = async (queueItem: any, finished: () => void) => {
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);
 
-    addLinksToQueue(pageLinksData);
+    addBacklinks(pageUrlData, pageLinksData);
 
     finished();
   } else {
