@@ -3,6 +3,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
+from resources import TopicResource
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -77,6 +78,7 @@ api = Api(app)
 # api.add_resource(PostListResource, '/posts')
 # api.add_resource(PostResource, '/posts/<int:post_id>')
 
+api.add_resource(TopicResource, '/topic')
 
 if __name__ == '__main__':
     app.run(debug=True)
