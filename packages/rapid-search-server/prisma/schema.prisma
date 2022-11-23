@@ -50,10 +50,10 @@ model Page {
   headline     String? 
   excerpt      String? // crawler should stored minimum of 140 chars
 
-  loadSpeedScore        String
+  loadSpeedScore        Int // ms
   topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])
   topicClassificationId String
-  topicScore            Float
+  topicScore            Float // 0.0-1.0
   // backlinkScore caclulated by domain backlinks
 
   lastAnalyzedDate DateTime @default(now())

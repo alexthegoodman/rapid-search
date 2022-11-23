@@ -13,7 +13,8 @@ export const savePageInformation = async (
   headline,
   excerpt,
   topic,
-  topicRating
+  topicRating,
+  loadSpeed
 ) => {
   console.info("urlData.hostname", urlData.hostname);
   return await prisma.page.create({
@@ -29,7 +30,7 @@ export const savePageInformation = async (
           },
         },
       },
-      loadSpeedScore: "",
+      loadSpeedScore: loadSpeed,
       topicClassification: {
         connect: {
           generatedInterestSlug: slugify(topic),
