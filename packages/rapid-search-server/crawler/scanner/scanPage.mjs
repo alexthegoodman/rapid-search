@@ -7,6 +7,7 @@ import { addBacklinks } from "../storage/addBacklinks.mjs";
 import { extractPageInformation } from "../extractor/extractPageInformation.mjs";
 import { extractPageLinks } from "../extractor/extractPageLinks.mjs";
 import { savePageInformation } from "../storage/savePageInformation.mjs";
+import { classifyExcerpt } from "../extractor/classifyExcerpt.mjs";
 
 const prisma = new PrismaClient();
 
@@ -55,12 +56,16 @@ export const scanPage = async (queueItem, finished) => {
     const { titleContent, descriptionContent, headlineText, excerpt } =
       extractPageInformation($);
 
+    const { topic, topicRating } = await classifyExcerpt(excerpt);
+
     await savePageInformation(
       pageUrlData,
       titleContent,
       descriptionContent,
       headlineText,
-      excerpt
+      excerpt,
+      topic,
+      topicRating
     );
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);

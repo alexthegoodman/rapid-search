@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { DateTime } from "luxon";
+import slugify from "slugify";
 
 import { normalizeText } from "./normalizeText.mjs";
 
@@ -10,7 +11,9 @@ export const savePageInformation = async (
   title,
   description,
   headline,
-  excerpt
+  excerpt,
+  topic,
+  topicRating
 ) => {
   console.info("urlData.hostname", urlData.hostname);
   return await prisma.page.create({
@@ -29,10 +32,10 @@ export const savePageInformation = async (
       loadSpeedScore: "",
       topicClassification: {
         connect: {
-          generatedInterestSlug: "Beer-Tasting",
+          generatedInterestSlug: slugify(topic),
         },
       },
-      topicScore: "",
+      topicScore: topicRating,
       metaTitle: title,
       metaDescription: description,
       headline,

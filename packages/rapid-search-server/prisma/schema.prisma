@@ -53,7 +53,7 @@ model Page {
   loadSpeedScore        String
   topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])
   topicClassificationId String
-  topicScore            String
+  topicScore            Float
   // backlinkScore caclulated by domain backlinks
 
   lastAnalyzedDate DateTime @default(now())
