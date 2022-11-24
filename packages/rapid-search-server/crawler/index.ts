@@ -10,7 +10,7 @@ export const startCrawler = () => {
   const initialUrls = [
     {
       id: null,
-      targetUrl: "https://www.hongkiat.com/blog/cool-interesting-websites/",
+      targetUrl: "https://en.wikipedia.org/wiki/Video_game",
     },
   ];
 

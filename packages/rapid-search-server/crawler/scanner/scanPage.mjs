@@ -60,9 +60,9 @@ export const scanPage = async (queueItem, finished) => {
 
     const { loadSpeed } = await recordLoadSpeed(pageUrl);
 
-    const { topic, topicRating } = await classifyExcerpt(excerpt);
-
     const { summary } = await summarizeText(body);
+
+    const { topic, topicRating } = await classifyExcerpt(summary);
 
     await savePageInformation(
       pageUrlData,

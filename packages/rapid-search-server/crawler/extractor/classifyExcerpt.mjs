@@ -1,6 +1,8 @@
 import axios from "axios";
 import _ from "lodash";
 
+import { parentPort } from "worker_threads";
+
 export const classifyExcerpt = async (excerpt) => {
   try {
     const { data } = await axios.post("http://127.0.0.1:5000/topic", {
@@ -22,8 +24,8 @@ export const classifyExcerpt = async (excerpt) => {
 
     return classification;
   } catch (error) {
-    throw Error(error);
-    // console.error(error);
-    // process.exit(2);
+    console.error(error);
+    parentPort.postMessage("workerFinished");
+    process.exit(2);
   }
 };
