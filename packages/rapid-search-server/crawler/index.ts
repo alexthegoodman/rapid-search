@@ -8,7 +8,11 @@ const prisma = new PrismaClient();
 
 export const startCrawler = () => {
   const initialUrls = [
-    { id: null, targetUrl: "https://en.wikipedia.org/wiki/List_of_hobbies" },
+    {
+      id: null,
+      targetUrl:
+        "https://www.lifewire.com/cool-websites-to-look-at-when-bored-3486362",
+    },
   ];
 
   const result = startScanWorkers(initialUrls);
