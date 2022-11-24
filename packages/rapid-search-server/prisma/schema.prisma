@@ -48,7 +48,8 @@ model Page {
   // some excerpts can be fetched at runtime
   // but this is for speed, convenience, and low-storage
   headline     String? 
-  excerpt      String? // crawler should stored minimum of 140 chars
+  excerpt      String? // 240 chars
+  summary      String?
 
   loadSpeedScore        Int // ms
   topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])

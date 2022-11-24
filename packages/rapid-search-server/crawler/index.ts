@@ -10,8 +10,7 @@ export const startCrawler = () => {
   const initialUrls = [
     {
       id: null,
-      targetUrl:
-        "https://www.lifewire.com/cool-websites-to-look-at-when-bored-3486362",
+      targetUrl: "https://www.hongkiat.com/blog/cool-interesting-websites/",
     },
   ];
 

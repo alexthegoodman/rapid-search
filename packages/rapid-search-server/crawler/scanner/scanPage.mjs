@@ -9,6 +9,7 @@ import { extractPageLinks } from "../extractor/extractPageLinks.mjs";
 import { savePageInformation } from "../storage/savePageInformation.mjs";
 import { classifyExcerpt } from "../extractor/classifyExcerpt.mjs";
 import { recordLoadSpeed } from "../extractor/recordLoadSpeed.mjs";
+import { summarizeText } from "../extractor/summarizeText.mjs";
 
 const prisma = new PrismaClient();
 
@@ -54,12 +55,14 @@ export const scanPage = async (queueItem, finished) => {
   if (links.length > 0) allowPageAnalysis = false;
 
   if (allowPageAnalysis) {
-    const { titleContent, descriptionContent, headlineText, excerpt } =
+    const { titleContent, descriptionContent, headlineText, excerpt, body } =
       extractPageInformation($);
 
     const { loadSpeed } = await recordLoadSpeed(pageUrl);
 
     const { topic, topicRating } = await classifyExcerpt(excerpt);
+
+    const { summary } = await summarizeText(body);
 
     await savePageInformation(
       pageUrlData,
@@ -69,7 +72,8 @@ export const scanPage = async (queueItem, finished) => {
       excerpt,
       topic,
       topicRating,
-      loadSpeed
+      loadSpeed,
+      summary
     );
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);

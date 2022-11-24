@@ -14,7 +14,8 @@ export const savePageInformation = async (
   excerpt,
   topic,
   topicRating,
-  loadSpeed
+  loadSpeed,
+  summary
 ) => {
   console.info("urlData.hostname", urlData.hostname);
   return await prisma.page.create({
@@ -41,6 +42,7 @@ export const savePageInformation = async (
       metaDescription: description,
       headline,
       excerpt,
+      summary,
       lastAnalyzedDate: DateTime.now().toISO(),
     },
   });
