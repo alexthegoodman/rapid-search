@@ -10,7 +10,7 @@ class KeywordExtractor:
         keywords = self.getHotwords(text)
         mostCommonKeywords = self.getMostCommon(keywords)
 
-        return mostCommonKeywordss
+        return mostCommonKeywords
 
     # https://betterprogramming.pub/extract-keywords-using-spacy-in-python-4a8415478fbf
     def getHotwords(text):
