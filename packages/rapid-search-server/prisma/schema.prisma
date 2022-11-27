@@ -51,6 +51,13 @@ model Page {
   excerpt      String? // 240 chars
   summary      String?
 
+  metaTitleNormal         String?
+  metaDescriptionNormal   String?  
+  headlineNormal          String? 
+  excerptNormal           String? // 240 chars
+  summaryNormal           String?
+  keywords                Json?
+
   loadSpeedScore        Int // ms
   topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])
   topicClassificationId String

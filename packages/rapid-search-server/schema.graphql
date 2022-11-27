@@ -19,5 +19,10 @@ type Link {
 }
 
 type Query {
-  ok: Boolean!
+  search(query: String!): [SearchResult]
+}
+
+type SearchResult {
+  title: String
+  url: String
 }

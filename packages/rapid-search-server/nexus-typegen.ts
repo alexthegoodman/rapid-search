@@ -58,6 +58,10 @@ export interface NexusGenObjects {
     url?: string | null; // String
   }
   Query: {};
+  SearchResult: { // root type
+    title?: string | null; // String
+    url?: string | null; // String
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -77,7 +81,11 @@ export interface NexusGenFieldTypes {
     url: string | null; // String
   }
   Query: { // field return type
-    ok: boolean; // Boolean!
+    search: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
+  }
+  SearchResult: { // field return type
+    title: string | null; // String
+    url: string | null; // String
   }
 }
 
@@ -88,11 +96,20 @@ export interface NexusGenFieldTypeNames {
     url: 'String'
   }
   Query: { // field return type name
-    ok: 'Boolean'
+    search: 'SearchResult'
+  }
+  SearchResult: { // field return type name
+    title: 'String'
+    url: 'String'
   }
 }
 
 export interface NexusGenArgTypes {
+  Query: {
+    search: { // args
+      query: string; // String!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {

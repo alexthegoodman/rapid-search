@@ -10,6 +10,7 @@ import { savePageInformation } from "../storage/savePageInformation.mjs";
 import { classifyExcerpt } from "../extractor/classifyExcerpt.mjs";
 import { recordLoadSpeed } from "../extractor/recordLoadSpeed.mjs";
 import { summarizeText } from "../extractor/summarizeText.mjs";
+import { extractKeywords } from "../extractor/extractKeywords.mjs";
 
 const prisma = new PrismaClient();
 
@@ -58,11 +59,13 @@ export const scanPage = async (queueItem, finished) => {
     const { titleContent, descriptionContent, headlineText, excerpt, body } =
       extractPageInformation($);
 
-    const { loadSpeed } = await recordLoadSpeed(pageUrl);
+    const { loadSpeed } = await recordLoadSpeed(pageUrl); //2s
 
-    const { summary } = await summarizeText(body);
+    const { keywords } = await extractKeywords(body);
 
-    const { topic, topicRating } = await classifyExcerpt(summary);
+    const { summary } = await summarizeText(body); //10s?
+
+    const { topic, topicRating } = await classifyExcerpt(summary); //20s on mac
 
     await savePageInformation(
       pageUrlData,
@@ -73,7 +76,8 @@ export const scanPage = async (queueItem, finished) => {
       topic,
       topicRating,
       loadSpeed,
-      summary
+      summary,
+      keywords
     );
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);
