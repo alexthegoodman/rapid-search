@@ -14,7 +14,7 @@ class TopicClassifier:
             "text_categorizer",
             config={
                 "data": interestsData,
-                # TODO: try facebook/bart-large-mnli zero-shot classifier
+                # "model": "facebook/bart-large-mnli", # not much more accurate, far slower
                 "model": "typeform/distilbert-base-uncased-mnli",
                 "cat_type": "zero",
                 "device": "gpu"
