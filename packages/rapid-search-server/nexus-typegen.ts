@@ -58,6 +58,10 @@ export interface NexusGenObjects {
     url?: string | null; // String
   }
   Query: {};
+  SearchData: { // root type
+    keywords?: Array<string | null> | null; // [String]
+    results?: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
+  }
   SearchResult: { // root type
     title?: string | null; // String
     url?: string | null; // String
@@ -81,7 +85,11 @@ export interface NexusGenFieldTypes {
     url: string | null; // String
   }
   Query: { // field return type
-    search: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
+    search: NexusGenRootTypes['SearchData'] | null; // SearchData
+  }
+  SearchData: { // field return type
+    keywords: Array<string | null> | null; // [String]
+    results: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
   }
   SearchResult: { // field return type
     title: string | null; // String
@@ -96,7 +104,11 @@ export interface NexusGenFieldTypeNames {
     url: 'String'
   }
   Query: { // field return type name
-    search: 'SearchResult'
+    search: 'SearchData'
+  }
+  SearchData: { // field return type name
+    keywords: 'String'
+    results: 'SearchResult'
   }
   SearchResult: { // field return type name
     title: 'String'

@@ -40,9 +40,13 @@ export const extractKeywords = async (text) => {
 
     const mostCommonKeywords = getMostCommon(data, 5);
 
-    console.info("mostCommonKeywords", mostCommonKeywords);
+    const keywordsOnly = mostCommonKeywords.map((pair) => {
+      return pair[0];
+    });
 
-    return { keywords: mostCommonKeywords };
+    console.info("mostCommonKeywords", mostCommonKeywords, keywordsOnly);
+
+    return { keywords: mostCommonKeywords, keywordsOnly };
   } catch (error) {
     console.error(error.message);
     parentPort.postMessage("workerFinished");

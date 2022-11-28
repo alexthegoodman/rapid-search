@@ -19,7 +19,12 @@ type Link {
 }
 
 type Query {
-  search(query: String!): [SearchResult]
+  search(query: String!): SearchData
+}
+
+type SearchData {
+  keywords: [String]
+  results: [SearchResult]
 }
 
 type SearchResult {
