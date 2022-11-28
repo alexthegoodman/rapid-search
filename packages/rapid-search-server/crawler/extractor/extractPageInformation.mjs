@@ -40,7 +40,7 @@ export const extractPageInformation = ($) => {
       body,
     };
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }

@@ -31,7 +31,7 @@ export const extractPageLinks = ($, origin) => {
 
     return pageLinksData;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }

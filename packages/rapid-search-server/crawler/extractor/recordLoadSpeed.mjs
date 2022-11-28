@@ -30,7 +30,7 @@ export const recordLoadSpeed = async (url) => {
 
     return { loadSpeed: startToInteractive };
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }

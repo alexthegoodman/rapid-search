@@ -24,7 +24,7 @@ export const classifyExcerpt = async (excerpt) => {
 
     return classification;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }

@@ -13,7 +13,7 @@ export const summarizeText = async (text) => {
 
     return { summary: data[0].summary_text };
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }
