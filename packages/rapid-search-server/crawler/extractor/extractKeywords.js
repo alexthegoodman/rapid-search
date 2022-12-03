@@ -24,7 +24,7 @@ const getMostCommon = (arr, size = 5) => {
   return sortableArray;
 };
 
-export const extractKeywords = async (text) => {
+export const extractKeywords = async (text, count = 5) => {
   try {
     // TODO: remove SpaCy keyword extactor
     // const { data } = await axios.post("http://127.0.0.1:5000/keywords", {
@@ -38,7 +38,7 @@ export const extractKeywords = async (text) => {
       remove_duplicates: false,
     });
 
-    const mostCommonKeywords = getMostCommon(data, 5);
+    const mostCommonKeywords = getMostCommon(data, count);
 
     const keywordsOnly = mostCommonKeywords.map((pair) => {
       return pair[0];

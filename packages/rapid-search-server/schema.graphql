@@ -7,6 +7,12 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
+type Interest {
+  generatedInterestSlug: String
+  id: String
+  name: String
+}
+
 """
 The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -19,15 +25,24 @@ type Link {
 }
 
 type Query {
-  search(query: String!): SearchData
+  search(contextQuery: String!, query: String!, topicClassificationSlug: String): SearchData
 }
 
 type SearchData {
+  contextKeywords: [String]
   keywords: [String]
   results: [SearchResult]
 }
 
 type SearchResult {
-  title: String
+  excerpt: String
+  headline: String
+  id: String
+  loadSpeedScore: Int
+  metaDescription: String
+  metaTitle: String
+  summary: String
+  topicClassification: Interest
+  topicScore: Float
   url: String
 }

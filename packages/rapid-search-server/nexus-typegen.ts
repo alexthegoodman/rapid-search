@@ -52,6 +52,11 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Interest: { // root type
+    generatedInterestSlug?: string | null; // String
+    id?: string | null; // String
+    name?: string | null; // String
+  }
   Link: { // root type
     description?: string | null; // String
     title?: string | null; // String
@@ -59,11 +64,19 @@ export interface NexusGenObjects {
   }
   Query: {};
   SearchData: { // root type
+    contextKeywords?: Array<string | null> | null; // [String]
     keywords?: Array<string | null> | null; // [String]
     results?: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
   }
   SearchResult: { // root type
-    title?: string | null; // String
+    excerpt?: string | null; // String
+    headline?: string | null; // String
+    id?: string | null; // String
+    loadSpeedScore?: number | null; // Int
+    metaDescription?: string | null; // String
+    metaTitle?: string | null; // String
+    summary?: string | null; // String
+    topicScore?: number | null; // Float
     url?: string | null; // String
   }
 }
@@ -79,6 +92,11 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Interest: { // field return type
+    generatedInterestSlug: string | null; // String
+    id: string | null; // String
+    name: string | null; // String
+  }
   Link: { // field return type
     description: string | null; // String
     title: string | null; // String
@@ -88,16 +106,30 @@ export interface NexusGenFieldTypes {
     search: NexusGenRootTypes['SearchData'] | null; // SearchData
   }
   SearchData: { // field return type
+    contextKeywords: Array<string | null> | null; // [String]
     keywords: Array<string | null> | null; // [String]
     results: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
   }
   SearchResult: { // field return type
-    title: string | null; // String
+    excerpt: string | null; // String
+    headline: string | null; // String
+    id: string | null; // String
+    loadSpeedScore: number | null; // Int
+    metaDescription: string | null; // String
+    metaTitle: string | null; // String
+    summary: string | null; // String
+    topicClassification: NexusGenRootTypes['Interest'] | null; // Interest
+    topicScore: number | null; // Float
     url: string | null; // String
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  Interest: { // field return type name
+    generatedInterestSlug: 'String'
+    id: 'String'
+    name: 'String'
+  }
   Link: { // field return type name
     description: 'String'
     title: 'String'
@@ -107,11 +139,20 @@ export interface NexusGenFieldTypeNames {
     search: 'SearchData'
   }
   SearchData: { // field return type name
+    contextKeywords: 'String'
     keywords: 'String'
     results: 'SearchResult'
   }
   SearchResult: { // field return type name
-    title: 'String'
+    excerpt: 'String'
+    headline: 'String'
+    id: 'String'
+    loadSpeedScore: 'Int'
+    metaDescription: 'String'
+    metaTitle: 'String'
+    summary: 'String'
+    topicClassification: 'Interest'
+    topicScore: 'Float'
     url: 'String'
   }
 }
@@ -119,7 +160,9 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Query: {
     search: { // args
+      contextQuery: string; // String!
       query: string; // String!
+      topicClassificationSlug?: string | null; // String
     }
   }
 }
