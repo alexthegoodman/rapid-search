@@ -29,7 +29,9 @@ export const extractPageLinks = ($, origin) => {
       }
     });
 
-    return pageLinksData;
+    const first10Links = pageLinksData.slice(0, 10);
+
+    return first10Links;
   } catch (error) {
     console.error(error.message);
     parentPort.postMessage("workerFinished");
