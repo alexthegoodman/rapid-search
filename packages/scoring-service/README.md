@@ -19,8 +19,9 @@ Additional:
 - `ssh -i "ec2-keypair1.pem" ec2-user@ec2-18-217-198-241.us-east-2.compute.amazonaws.com`
 - `git clone https://github.com/alexthegoodman/rapid-search`
 - `cd rapid-search/packages/scoring-service`
-- `pip install -U pip setuptools wheel` ?
-- (sudo) `pip3.7 install -r requirements.txt`
+- `pip install -U pip setuptools wheel`
+- `sudo yum install python3-devel`
+- (sudo) (pip3.7) `pip3 install -r requirements.txt`
 
 ## Links
 

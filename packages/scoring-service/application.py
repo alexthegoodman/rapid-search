@@ -16,4 +16,4 @@ api.add_resource(SummaryResource, '/summary')
 api.add_resource(KeywordResource, '/keywords')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')
