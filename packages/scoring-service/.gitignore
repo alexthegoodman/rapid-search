@@ -120,5 +120,6 @@ dmypy.json
 .env
 typeform
 facebook
+zero-shot.onnx
 
 ec2-keypair1.pem
