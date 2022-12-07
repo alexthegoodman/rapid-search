@@ -29,7 +29,7 @@ export const extractPageLinks = ($, origin) => {
       }
     });
 
-    const first10Links = pageLinksData.slice(0, 10);
+    const first10Links = pageLinksData.slice(10, 20);
 
     return first10Links;
   } catch (error) {

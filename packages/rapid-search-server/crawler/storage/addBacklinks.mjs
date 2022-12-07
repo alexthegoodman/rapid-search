@@ -11,31 +11,44 @@ export const addBacklinks = async (pageUrlData, pageLinksData) => {
 
     // console.info("add backlink", originUrl, targetUrl);
 
-    await prisma.backlink.create({
-      data: {
-        originUrl,
-        originDomain: {
-          connectOrCreate: {
-            where: {
-              content: originDomain,
+    const exists = await prisma.backlink.findFirst({ where: { targetUrl } });
+
+    if (exists) {
+      await prisma.backlink.update({
+        where: {
+          id: exists.id,
+        },
+        data: {
+          count: exists.count + 1,
+        },
+      });
+    } else {
+      await prisma.backlink.create({
+        data: {
+          originUrl,
+          originDomain: {
+            connectOrCreate: {
+              where: {
+                content: originDomain,
+              },
+              create: {
+                content: originDomain,
+              },
             },
-            create: {
-              content: originDomain,
+          },
+          targetUrl,
+          targetDomain: {
+            connectOrCreate: {
+              where: {
+                content: targetDomain,
+              },
+              create: {
+                content: targetDomain,
+              },
             },
           },
         },
-        targetUrl,
-        targetDomain: {
-          connectOrCreate: {
-            where: {
-              content: targetDomain,
-            },
-            create: {
-              content: targetDomain,
-            },
-          },
-        },
-      },
-    });
+      });
+    }
   }
 };

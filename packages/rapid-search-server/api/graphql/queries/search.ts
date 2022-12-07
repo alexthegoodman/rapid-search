@@ -151,9 +151,10 @@ export const SearchQuery = extendType({
           where: {
             // return pages where the summary contains the top 3 query keywords
             OR: [filterByTitle, filterBySummary, filterByExcerpt],
-            topicScore: {
-              gte: 0.4,
-            },
+            // topicScore: {
+            //   // gte: 0.4,
+            //   gte: 0.1,
+            // },
             ...filterByTopic,
           },
           orderBy: {

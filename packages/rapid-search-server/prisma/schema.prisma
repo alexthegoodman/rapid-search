@@ -20,6 +20,8 @@ model Backlink {
 
   analyzedDate DateTime?
 
+  count     Int @default(1)
+
   updatedAt DateTime @updatedAt
   createdAt DateTime @default(now())
 }

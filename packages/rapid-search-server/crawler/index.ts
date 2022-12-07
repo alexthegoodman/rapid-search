@@ -10,7 +10,7 @@ export const startCrawler = () => {
   const initialUrls = [
     {
       id: null,
-      targetUrl: "https://en.wikipedia.org/wiki/Video_game",
+      targetUrl: "https://www.producthunt.com",
     },
   ];
 
