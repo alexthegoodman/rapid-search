@@ -12,6 +12,14 @@ export const startCrawler = () => {
       id: null,
       targetUrl: "https://www.producthunt.com",
     },
+    {
+      id: null,
+      targetUrl: "https://en.wikipedia.org/wiki/Video_game",
+    },
+    {
+      id: null,
+      targetUrl: "https://www.ign.com",
+    },
   ];
 
   const result = startScanWorkers(initialUrls);

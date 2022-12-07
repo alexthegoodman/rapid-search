@@ -9,6 +9,8 @@ class TopicClassifier:
         #     interestsData[i] = interestsData[i].lower()
         # interestsData = ["Dogs", "Cats", "Movies", "Music", "Food"]
 
+        spacy.prefer_gpu()
+
         self.nlp = spacy.blank("en")
         self.nlp.add_pipe(
             "text_categorizer",
