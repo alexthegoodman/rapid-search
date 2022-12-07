@@ -3,4 +3,4 @@ import { startCrawler } from "./crawler";
 
 startApolloServer();
 
-// startCrawler();
+startCrawler();

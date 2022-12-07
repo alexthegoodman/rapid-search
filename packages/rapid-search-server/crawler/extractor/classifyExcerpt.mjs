@@ -5,9 +5,11 @@ import { parentPort } from "worker_threads";
 
 export const classifyExcerpt = async (excerpt) => {
   try {
-    const { data } = await axios.post("http://127.0.0.1:5000/topic", {
+    let { data } = await axios.post("http://18.217.198.241:5000/topic", {
       text: excerpt,
     });
+
+    data = data[0];
 
     const topMatch = _.maxBy(_.keys(data), (o) => {
       return data[o];

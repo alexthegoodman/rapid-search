@@ -23,9 +23,15 @@ export default async function seedInterests() {
     const generatedCategorySlug = slugify(name);
 
     const items = Array.from(category.items);
-    items.map(async (interest, x) => {
+    for (const interest of items) {
       const name = interest;
       const generatedInterestSlug = slugify(name);
+
+      const exists = await prisma.interest.findFirst({
+        where: { generatedInterestSlug },
+      });
+
+      if (exists) return;
 
       await prisma.interest.create({
         data: {
@@ -38,7 +44,10 @@ export default async function seedInterests() {
           },
         },
       });
-    });
+    }
+    // items.map(async (interest, x) => {
+
+    // });
   });
 
   const categories = await prisma.category.findMany({
