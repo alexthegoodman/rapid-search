@@ -120,3 +120,5 @@ dmypy.json
 .env
 typeform
 facebook
+
+ec2-keypair1.pem
