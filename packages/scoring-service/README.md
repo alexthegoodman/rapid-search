@@ -14,6 +14,13 @@ Additional:
 
 - `python -m spacy download en_core_web_md`
 
+## EC2
+
+- `ssh -i "ec2-keypair1.pem" ec2-user@ec2-18-217-198-241.us-east-2.compute.amazonaws.com`
+- `git clone https://github.com/alexthegoodman/rapid-search`
+- `cd rapid-search/packages/scoring-service`
+- `pip3 install -r requirements.txt`
+
 ## Links
 
 - https://github.com/Pandora-Intelligence/classy-classification
