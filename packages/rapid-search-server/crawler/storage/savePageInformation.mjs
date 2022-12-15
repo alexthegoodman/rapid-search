@@ -36,12 +36,12 @@ export const savePageInformation = async (
           },
         },
         loadSpeedScore: loadSpeed,
-        topicClassification: {
-          connect: {
-            generatedInterestSlug: slugify(topic),
-          },
-        },
-        topicScore: topicRating,
+        // topicClassification: {
+        //   connect: {
+        //     generatedInterestSlug: slugify(topic),
+        //   },
+        // },
+        // topicScore: topicRating,
         metaTitle: title,
         metaDescription: description,
         headline,

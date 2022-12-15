@@ -8,7 +8,7 @@ This will be a Flask API which scores and classifies text documents using machin
 - `source env/bin/activate`
 - `pip install -U pip setuptools wheel`
 - `pip install -r requirements.txt`
-- `python3 main.py`
+- `python3 application.py`
 
 Additional:
 

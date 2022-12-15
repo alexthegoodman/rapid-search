@@ -68,7 +68,9 @@ export const scanPage = async (queueItem, finished) => {
 
     const { summary } = await summarizeText(body); //10s?
 
-    const { topic, topicRating } = await classifyExcerpt(summary); //20s on ma
+    // const { topic, topicRating } = await classifyExcerpt(summary); //20s on ma
+    const topic = null;
+    const topicRating = null;
 
     await savePageInformation(
       pageUrlData,

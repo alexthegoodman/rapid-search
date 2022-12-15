@@ -2,7 +2,7 @@ from transformers import pipeline
 
 class TextSummarizer:
     def __init__(self):
-        self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
+        self.summarizer = pipeline("summarization", model="facebook/bart-large-cnn", device=0)
 
 
     def summarizeText(self, text):
