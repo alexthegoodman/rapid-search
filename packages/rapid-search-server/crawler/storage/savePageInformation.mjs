@@ -17,7 +17,8 @@ export const savePageInformation = async (
   topicRating,
   loadSpeed,
   summary,
-  keywords
+  keywords,
+  media
 ) => {
   try {
     console.info("urlData.hostname", urlData.hostname);
@@ -53,6 +54,13 @@ export const savePageInformation = async (
         summaryNormal: normalizeText(summary),
         keywords,
         lastAnalyzedDate: DateTime.now().toISO(),
+        media: {
+          createMany: media.map((item) => {
+            return {
+              url: item.src,
+            };
+          }),
+        },
       },
     });
   } catch (error) {

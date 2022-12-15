@@ -59,7 +59,7 @@ export const startScanQueue = async () => {
         }
       };
 
-      const scanDelay = process.env.NODE_ENV === "production" ? 0 : 2000;
+      const scanDelay = process.env.NODE_ENV === "production" ? 0 : 500;
 
       console.info("-------- start", workerData.workerId);
       console.info("ScanPage (delay)", queueItem.targetUrl, scanDelay);

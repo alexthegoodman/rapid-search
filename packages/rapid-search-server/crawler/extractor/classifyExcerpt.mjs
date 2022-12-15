@@ -5,7 +5,7 @@ import { parentPort } from "worker_threads";
 
 export const classifyExcerpt = async (excerpt) => {
   try {
-    let { data } = await axios.post("http://18.217.198.241:5000/topic", {
+    let { data } = await axios.post("http://0.0.0.0:5000/topic", {
       text: excerpt,
     });
 

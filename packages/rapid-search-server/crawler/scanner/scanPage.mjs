@@ -11,6 +11,7 @@ import { classifyExcerpt } from "../extractor/classifyExcerpt.mjs";
 import { recordLoadSpeed } from "../extractor/recordLoadSpeed.mjs";
 import { summarizeText } from "../extractor/summarizeText.mjs";
 import kw from "../extractor/extractKeywords.js";
+import { extractPageMedia } from "../extractor/extractPageMedia.mjs";
 
 const prisma = new PrismaClient();
 
@@ -63,9 +64,11 @@ export const scanPage = async (queueItem, finished) => {
 
     const { keywords } = await kw.extractKeywords(body);
 
+    const { onlyMedia } = extractPageMedia($, pageUrlData.origin);
+
     const { summary } = await summarizeText(body); //10s?
 
-    const { topic, topicRating } = await classifyExcerpt(summary); //20s on mac
+    const { topic, topicRating } = await classifyExcerpt(summary); //20s on ma
 
     await savePageInformation(
       pageUrlData,
@@ -77,7 +80,8 @@ export const scanPage = async (queueItem, finished) => {
       topicRating,
       loadSpeed,
       summary,
-      keywords
+      keywords,
+      onlyMedia
     );
 
     const pageLinksData = extractPageLinks($, pageUrlData.origin);
