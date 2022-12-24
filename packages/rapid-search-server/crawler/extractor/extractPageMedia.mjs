@@ -16,6 +16,7 @@ export const extractPageMedia = ($, origin) => {
           const nextIndex = pageImageData.length;
           pageImageData[nextIndex] = {
             src: srcData.href,
+            type: "image"
           };
         }
       } catch (error) {
@@ -38,6 +39,7 @@ export const extractPageMedia = ($, origin) => {
           const nextIndex = pageVideoData.length;
           pageVideoData[nextIndex] = {
             src,
+            type: "video"
           };
         }
       } catch (error) {
@@ -61,6 +63,7 @@ export const extractPageMedia = ($, origin) => {
           const nextIndex = pageAudioData.length;
           pageAudioData[nextIndex] = {
             src,
+            type: "audio"
           };
         }
       } catch (error) {

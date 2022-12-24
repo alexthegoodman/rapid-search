@@ -10,20 +10,16 @@ export const startCrawler = () => {
   const initialUrls = [
     {
       id: null,
-      targetUrl: "https://payloadcms.com",
+      targetUrl: "https://www.producthunt.com",
     },
-    // {
-    //   id: null,
-    //   targetUrl: "https://www.producthunt.com",
-    // },
-    // {
-    //   id: null,
-    //   targetUrl: "https://en.wikipedia.org/wiki/Video_game",
-    // },
-    // {
-    //   id: null,
-    //   targetUrl: "https://www.ign.com",
-    // },
+    {
+      id: null,
+      targetUrl: "https://en.wikipedia.org/wiki/Video_game",
+    },
+    {
+      id: null,
+      targetUrl: "https://www.ign.com",
+    },
   ];
 
   const result = startScanWorkers(initialUrls);

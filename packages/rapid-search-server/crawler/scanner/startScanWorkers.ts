@@ -1,8 +1,12 @@
+import { setMaxListeners } from "events";
+
 const { Worker } = require("worker_threads");
 
 // 2 requests at once to same flask api is double total compute time on local
 // might as well use 1 worker at a time
 const numOfWorkers = 1;
+
+setMaxListeners(20);
 
 const startScanWorker = (initialUrls: object[], i: number) => {
   const worker = new Worker("./crawler/scanner/startScanQueue.mjs", {

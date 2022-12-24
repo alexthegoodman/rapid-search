@@ -63,9 +63,9 @@ model Page {
   media   Media[]
 
   loadSpeedScore        Int // ms
-  topicClassification   Interest @relation(fields: [topicClassificationId], references: [id])
-  topicClassificationId String
-  topicScore            Float // 0.0-1.0
+  topicClassification   Interest? @relation(fields: [topicClassificationId], references: [id])
+  topicClassificationId String?
+  topicScore            Float? // 0.0-1.0
   // backlinkScore caclulated by domain backlinks
 
   lastAnalyzedDate DateTime @default(now())
@@ -77,9 +77,9 @@ model Page {
 model Media {
   id String @id @default(uuid()) @unique
 
-  url         String @unique // url of image, video, file
+  url         String // url of image, video, file
   type        String
-  mimeType    String
+  mimeType    String?
 
   page        Page @relation(fields: [pageId], references: [id])
   pageId      String

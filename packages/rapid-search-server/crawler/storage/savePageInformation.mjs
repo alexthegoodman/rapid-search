@@ -21,7 +21,7 @@ export const savePageInformation = async (
   media
 ) => {
   try {
-    console.info("urlData.hostname", urlData.hostname);
+    console.info("urlData.href", urlData.href);
     return await prisma.page.create({
       data: {
         url: urlData.href,
@@ -55,11 +55,14 @@ export const savePageInformation = async (
         keywords,
         lastAnalyzedDate: DateTime.now().toISO(),
         media: {
-          createMany: media.map((item) => {
-            return {
-              url: item.src,
-            };
-          }),
+          createMany: {
+            data: media.map((item) => {
+              return {
+                url: item.src,
+                type: item.type
+              };
+            })
+          },
         },
       },
     });

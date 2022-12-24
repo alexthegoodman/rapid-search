@@ -11,9 +11,17 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 api = Api(app)
 
+print("Adding Resources...")
+
 # api.add_resource(TopicResource, '/topic')
 api.add_resource(SummaryResource, '/summary')
 # api.add_resource(KeywordResource, '/keywords')
 
+@app.errorhandler(Exception)          
+def basic_error(e):          
+    return "an error occured: " + str(e) 
+
+print("Starting Server...")
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug=True)

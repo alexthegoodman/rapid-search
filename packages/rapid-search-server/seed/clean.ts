@@ -20,13 +20,16 @@ export default async function clean() {
   //   });
 
   // await prisma.raw("TRUNCATE AnnotationMeta;");
-
-  await prisma.backlink.deleteMany({
+  await prisma.media.deleteMany({
     where: { id: { not: "" } },
   });
   await prisma.page.deleteMany({
     where: { id: { not: "" } },
   });
+  await prisma.backlink.deleteMany({
+    where: { id: { not: "" } },
+  });
+  
   await prisma.domain.deleteMany({
     where: { id: { not: "" } },
   });
