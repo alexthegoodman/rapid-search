@@ -25,6 +25,8 @@ export const startScanQueue = async () => {
     },
   });
 
+  console.info("Backlinks collected...")
+
   if (queueItems.length === 0 && skipItems === 0) {
     queueItems = workerData.initialUrls;
   }
@@ -34,7 +36,8 @@ export const startScanQueue = async () => {
   }
 
   // console.info("startScanQueue queueItems", queueItems);
-
+  console.info("Create pagescanner")
+  
   var currentItem = 0;
   const pageScanner = () =>
     new Promise(async (resolve, reject) => {

@@ -3,8 +3,9 @@ import puppeteer from "puppeteer";
 import { parentPort } from "worker_threads";
 
 export const recordLoadSpeed = async (url) => {
+  const browser = await puppeteer.launch();
+  
   try {
-    const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // for **consistent** measurements
@@ -17,7 +18,7 @@ export const recordLoadSpeed = async (url) => {
       latency: 20,
     });
 
-    await page.goto(url);
+    await page.goto(url, { timeout: 10000 });
 
     const performanceTimingJson = await page.evaluate(() =>
       JSON.stringify(window.performance.timing)
@@ -26,11 +27,14 @@ export const recordLoadSpeed = async (url) => {
     const startToInteractive =
       performanceTiming.domInteractive - performanceTiming.navigationStart;
 
+    await browser.close();
+
     console.log(`Navigation start to DOM interactive: ${startToInteractive}ms`);
 
     return { loadSpeed: startToInteractive };
   } catch (error) {
     console.error(error.message);
+    await browser.close();
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }

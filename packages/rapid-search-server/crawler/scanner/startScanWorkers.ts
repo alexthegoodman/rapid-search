@@ -1,4 +1,4 @@
-import { setMaxListeners } from "events";
+// import { setMaxListeners } from "process";
 
 const { Worker } = require("worker_threads");
 
@@ -6,9 +6,11 @@ const { Worker } = require("worker_threads");
 // might as well use 1 worker at a time
 const numOfWorkers = 1;
 
-setMaxListeners(20);
+// require('events').EventEmitter.defaultMaxListeners = 20;
 
 const startScanWorker = (initialUrls: object[], i: number) => {
+  console.info("startScanWorker");
+  
   const worker = new Worker("./crawler/scanner/startScanQueue.mjs", {
     workerData: { numOfWorkers, workerId: i, initialUrls },
   });

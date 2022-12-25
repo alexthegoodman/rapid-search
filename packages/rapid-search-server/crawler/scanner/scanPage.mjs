@@ -32,19 +32,26 @@ export const scanPage = async (queueItem, finished) => {
     });
   }
 
+  console.info("Get page html...")
+
   let pageHtml = null;
   try {
-    pageHtml = await got.get(pageUrl);
+    pageHtml = await got.get(pageUrl, { timeout: 10000 });
   } catch (error) {
     console.error("pageHtml error", error);
   }
 
   if (pageHtml === null) {
+    console.info("no html finished")
     finished();
     return;
   }
 
+  console.info("Load cheerio")
+
   const $ = cheerio.load(pageHtml.body);
+
+  console.info("Load links")
 
   // TODO: Check if url exists in Links
   const links = await prisma.page.findMany({
@@ -52,6 +59,8 @@ export const scanPage = async (queueItem, finished) => {
       url: pageUrl,
     },
   });
+
+  console.info("Begin analysis...")
 
   let allowPageAnalysis = true;
   if (links.length > 0) allowPageAnalysis = false;
@@ -64,9 +73,15 @@ export const scanPage = async (queueItem, finished) => {
 
     const { keywords } = await kw.extractKeywords(body);
 
+    console.info("Extract media")
+
     const { onlyMedia } = extractPageMedia($, pageUrlData.origin);
 
+    console.info("Summarize text")
+
     const { summary } = await summarizeText(body); //10s?
+
+    console.info("Save information")
 
     // const { topic, topicRating } = await classifyExcerpt(summary); //20s on ma
     const topic = null;

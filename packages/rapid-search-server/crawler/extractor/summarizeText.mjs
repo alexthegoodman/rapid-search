@@ -7,7 +7,7 @@ export const summarizeText = async (text) => {
   try {
     const { data } = await axios.post("http://0.0.0.0:5000/summary", {
       text: text.substr(0, 2000), // always max sized excerpt
-    });
+    }, { timeout: 10000 });
 
     console.info("data", data);
 

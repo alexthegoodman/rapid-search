@@ -1,32 +1,32 @@
-import spacy
-from collections import Counter
-from string import punctuation
+# import spacy
+# from collections import Counter
+# from string import punctuation
 
-class KeywordExtractor:
-    def __init__(self):
-        self.nlp = spacy.load("en_core_web_md")
+# class KeywordExtractor:
+#     def __init__(self):
+#         self.nlp = spacy.load("en_core_web_md")
 
-    def extractKeywords(self, text):
-        keywords = self.getHotwords(text)
-        mostCommonKeywords = self.getMostCommon(keywords)
+#     def extractKeywords(self, text):
+#         keywords = self.getHotwords(text)
+#         mostCommonKeywords = self.getMostCommon(keywords)
 
-        return mostCommonKeywords
+#         return mostCommonKeywords
 
-    # https://betterprogramming.pub/extract-keywords-using-spacy-in-python-4a8415478fbf
-    def getHotwords(self, text):
-        result = []
-        pos_tag = ['PROPN', 'ADJ', 'NOUN']
-        doc = self.nlp(text.lower())
+#     # https://betterprogramming.pub/extract-keywords-using-spacy-in-python-4a8415478fbf
+#     def getHotwords(self, text):
+#         result = []
+#         pos_tag = ['PROPN', 'ADJ', 'NOUN']
+#         doc = self.nlp(text.lower())
 
-        for token in doc:
-            if(token.text in self.nlp.Defaults.stop_words or token.text in punctuation):
-                continue
-            if(token.pos_ in pos_tag):
-                result.append(token.text)
+#         for token in doc:
+#             if(token.text in self.nlp.Defaults.stop_words or token.text in punctuation):
+#                 continue
+#             if(token.pos_ in pos_tag):
+#                 result.append(token.text)
                     
-        return result
+#         return result
 
-    def getMostCommon(self, keywords, count = 5):
-        mostCommonKeywords = Counter(keywords).most_common(count)
+#     def getMostCommon(self, keywords, count = 5):
+#         mostCommonKeywords = Counter(keywords).most_common(count)
 
-        return mostCommonKeywords
+#         return mostCommonKeywords
