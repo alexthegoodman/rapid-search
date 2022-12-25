@@ -17,9 +17,9 @@ print("Adding Resources...")
 api.add_resource(SummaryResource, '/summary')
 # api.add_resource(KeywordResource, '/keywords')
 
-@app.errorhandler(Exception)          
-def basic_error(e):          
-    return "an error occured: " + str(e) 
+# @app.errorhandler(Exception)          
+# def basic_error(e):          
+#     return "an error occured: " + str(e) 
 
 print("Starting Server...")
 

@@ -22,7 +22,7 @@ const startScanWorker = (initialUrls: object[], i: number) => {
       setTimeout(() => {
         console.info("respawn");
         startScanWorker(initialUrls, i);
-      }, 10000);
+      }, 2000);
     }
   });
   worker.on("error", (error: any) => console.error("error", error));
