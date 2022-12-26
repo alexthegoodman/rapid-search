@@ -9,11 +9,11 @@ const numOfWorkers = 1;
 
 // require('events').EventEmitter.defaultMaxListeners = 20;
 
-const startScanWorker = (initialUrls: object[], i: number) => {
+const startScanWorker = (i: number) => {
   console.info("startScanWorker");
   
   const worker = new Worker("./crawler/scanner/startScanQueue.mjs", {
-    workerData: { numOfWorkers, workerId: i, initialUrls },
+    workerData: { numOfWorkers, workerId: i },
   });
 
   worker.on("message", (message: any) => {
@@ -22,7 +22,7 @@ const startScanWorker = (initialUrls: object[], i: number) => {
       // delay 10 seconds then restart worker
       setTimeout(() => {
         console.info("respawn");
-        startScanWorker(initialUrls, i);
+        startScanWorker(i);
       }, 2000);
     }
   });
@@ -36,9 +36,9 @@ const startScanWorker = (initialUrls: object[], i: number) => {
   });
 };
 
-export const startScanWorkers = (initialUrls: object[]) => {
+export const startScanWorkers = () => {
   for (let i = 1; i <= numOfWorkers; i++) {
     console.info("create worker", i);
-    startScanWorker(initialUrls, i);
+    startScanWorker(i);
   }
 };

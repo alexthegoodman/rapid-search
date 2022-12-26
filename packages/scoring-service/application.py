@@ -20,6 +20,7 @@ api.add_resource(SummaryResource, '/summary')
 @app.errorhandler(Exception)          
 def basic_error(e):          
     print("an error occured: " + str(e))
+    # todo: kill server so it can restart
 
 print("Starting Server...")
 

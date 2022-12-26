@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Domain" ALTER COLUMN "analyzedDate" SET DEFAULT CURRENT_TIMESTAMP;

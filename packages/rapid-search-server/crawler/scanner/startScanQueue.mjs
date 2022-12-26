@@ -3,35 +3,59 @@ import { scanPage } from "./scanPage.mjs";
 
 // const { workerData } = require("worker_threads");
 import { workerData, parentPort } from "worker_threads";
+import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
 export const startScanQueue = async () => {
   // console.info("workerData", workerData, parseInt(workerData.workerId) - 1);
-  const skipItems = (workerData.workerId - 1) * 100;
+  const skipItems = (workerData.workerId - 1) * 1;
 
   console.info("startScanQueue", skipItems);
 
-  let queueItems = await prisma.backlink.findMany({
+  const targetDomain = await prisma.domain.findFirst({
     where: {
       analyzedDate: {
-        equals: null,
-      },
+        equals: null
+      }
     },
     skip: skipItems,
-    take: 100,
+    orderBy: {
+      createdAt: "asc"
+    }
+  });
+
+  await prisma.domain.update({
+    where: {
+      id: targetDomain.id
+    },
+    data: {
+      analyzedDate: DateTime.now().toISO()
+    }
+  })
+
+  console.info("targetDomain ", targetDomain.content);
+
+  let queueItems = await prisma.backlink.findMany({
+    where: {
+      targetDomain: {
+        id: targetDomain.id
+      },
+      analyzedDate: {
+        equals: null
+      }
+    },
+    take: 10,
     orderBy: {
       createdAt: "asc",
     },
   });
 
-  console.info("Backlinks collected...")
+  console.info("Backlinks collected... ", queueItems.length)
 
-  if (queueItems.length === 0 && skipItems === 0) {
-    queueItems = workerData.initialUrls;
-  }
-  if (queueItems.length === 0 && workerData.workerId > 1) {
-    // cancel all workers when first seeding db
+  if (queueItems.length === 0) {
+    console.warn("No backlinks!")
+    parentPort.postMessage("workerFinished");
     return;
   }
 
