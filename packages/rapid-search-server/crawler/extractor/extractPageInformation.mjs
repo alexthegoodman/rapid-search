@@ -24,13 +24,6 @@ export const extractPageInformation = ($) => {
       "description: ",
       descriptionContent
     );
-    console.info(
-      "Body Info ",
-      headlineText,
-      "excerpt: ",
-      articleExcerpt !== "",
-      excerpt
-    );
 
     return {
       titleContent,
