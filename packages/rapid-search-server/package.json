@@ -19,8 +19,6 @@
     "dev": "ts-node-dev --transpile-only --no-notify index.ts",
     "generate": "prisma generate",
     "migrate": "prisma migrate dev",
-    "db:seed": "ts-node seed",
-    "db:clean": "ts-node seed/clean",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "dependencies": {

@@ -147,20 +147,86 @@ export const SearchQuery = extendType({
           ],
         };
 
+        const filterExcerptWideContext = {
+          OR: [
+            {
+              excerptNormal: {
+                contains: contextKeywordsOnly[0],
+              },
+            },
+            {
+              excerptNormal: {
+                contains: contextKeywordsOnly[1],
+              },
+            },
+            {
+              excerptNormal: {
+                contains: contextKeywordsOnly[2],
+              },
+            },
+          ],
+        };
+
+        const filterExcerptNarrowContext = {
+          AND: [
+            {
+              excerptNormal: {
+                contains: contextKeywordsOnly[0],
+              },
+            },
+            {
+              excerptNormal: {
+                contains: contextKeywordsOnly[1],
+              },
+            },
+            // {
+            //   excerptNormal: {
+            //     contains: contextKeywordsOnly[2],
+            //   },
+            // },
+          ],
+        };
+
+        const filterExcerptWidePrimary = {
+          OR: [
+            {
+              excerptNormal: {
+                contains: keywordsOnly[0],
+              },
+            },
+            {
+              excerptNormal: {
+                contains: keywordsOnly[1],
+              },
+            },
+            {
+              excerptNormal: {
+                contains: keywordsOnly[2],
+              },
+            },
+          ]
+        }
+
+
         const pageResults = await prisma.page.findMany({
           where: {
             // return pages where the summary contains the top 3 query keywords
-            OR: [filterByTitle, filterBySummary, filterByExcerpt],
+            // OR: [
+            //   filterByTitle, 
+            //   filterBySummary, 
+            //   filterByExcerpt
+            // ],
+            AND: [filterExcerptWideContext, filterExcerptWidePrimary],
             // topicScore: {
             //   // gte: 0.4,
             //   gte: 0.1,
             // },
             ...filterByTopic,
           },
-          orderBy: {
-            // topicScore: "desc",
-            loadSpeedScore: "asc",
-          },
+          // orderBy: {
+          //   // topicScore: "desc",
+          //   loadSpeedScore: "asc",
+          // },
         });
 
         console.info("pageResults", pageResults);
