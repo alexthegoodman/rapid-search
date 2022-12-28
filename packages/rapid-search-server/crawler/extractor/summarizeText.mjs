@@ -4,10 +4,21 @@ import string from "string-sanitizer";
 
 import { parentPort } from "worker_threads";
 
+function cleanString(input) {
+  var output = "";
+  for (var i=0; i<input.length; i++) {
+      if (input.charCodeAt(i) <= 127) {
+          output += input.charAt(i);
+      }
+  }
+  return output;
+}
+
 export const summarizeText = async (text) => {
   try {
     text = text.substr(0, 2000); // always max sized excerpt
     text = string.sanitize.keepSpace(text); // clear error-prone junk
+    text = cleanString(text);
 
     console.info("Sending text... ", text);
 

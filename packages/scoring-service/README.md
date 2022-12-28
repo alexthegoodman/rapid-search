@@ -15,8 +15,8 @@ Additional:
 
 - `pip install -U 'spacy[cuda-autodetect]'`
 - `python -m spacy download en_core_web_md`
-- `npm install forever -g; forever start --spinSleepTime=30000 --minUptime=30000 -d -c python3 application.py` 
-(Note: Runs in background. See `forever list` and `forever logs application.py`)
+- `npm install forever -g; forever start -d -c python3 application.py` 
+(Note: Runs in background. See `forever list` and `forever logs application.py` and `forever cleanlogs` will remove the verbose log files)
 
 ## EC2
 

@@ -16,12 +16,12 @@ export const startScanQueue = async () => {
   const targetDomain = await prisma.domain.findFirst({
     where: {
       analyzedDate: {
-        equals: null
+        not: null
       }
     },
     skip: skipItems,
     orderBy: {
-      createdAt: "asc"
+      analyzedDate: "asc"
     }
   });
 

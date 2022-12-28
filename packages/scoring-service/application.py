@@ -1,4 +1,7 @@
 import logging
+import os
+import signal
+import platform
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
@@ -18,9 +21,21 @@ api.add_resource(SummaryResource, '/summary')
 # api.add_resource(KeywordResource, '/keywords')
 
 @app.errorhandler(Exception)          
-def basic_error(e):          
+def basic_error(e): 
+    PID = os.getpid()
+
     print("an error occured: " + str(e))
-    # todo: kill server so it can restart
+    print(PID)
+    
+    # kill server so it can restart
+    # if platform.system() != 'Windows':
+    #     PGID = os.getpgid(PID)
+    if platform.system() != 'Windows':
+        # os.killpg(PGID, signal.SIGKILL)
+        os.kill(PID, signal.SIGKILL)
+    else:
+        os.kill(PID, signal.SIGTERM)
+    
 
 print("Starting Server...")
 
