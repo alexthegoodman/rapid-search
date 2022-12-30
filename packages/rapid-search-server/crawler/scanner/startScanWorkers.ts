@@ -5,7 +5,7 @@ const { Worker } = require("worker_threads");
 // 2 requests at once to same flask api is double total compute time on local
 // but if the request at different times, can save time
 // Warning: some sites may block for concurrent requests
-const numOfWorkers = 3;
+const numOfWorkers = 6;
 
 // require('events').EventEmitter.defaultMaxListeners = 20;
 

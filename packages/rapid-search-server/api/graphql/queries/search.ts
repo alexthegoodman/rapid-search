@@ -147,60 +147,60 @@ export const SearchQuery = extendType({
           ],
         };
 
-        const filterExcerptWideContext = {
+        const filterSummaryWideContext = {
           OR: [
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: contextKeywordsOnly[0],
               },
             },
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: contextKeywordsOnly[1],
               },
             },
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: contextKeywordsOnly[2],
               },
             },
           ],
         };
 
-        const filterExcerptNarrowContext = {
+        const filterSummaryNarrowContext = {
           AND: [
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: contextKeywordsOnly[0],
               },
             },
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: contextKeywordsOnly[1],
               },
             },
             // {
-            //   excerptNormal: {
+            //   summaryNormal: {
             //     contains: contextKeywordsOnly[2],
             //   },
             // },
           ],
         };
 
-        const filterExcerptWidePrimary = {
+        const filterSummaryWidePrimary = {
           OR: [
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: keywordsOnly[0],
               },
             },
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: keywordsOnly[1],
               },
             },
             {
-              excerptNormal: {
+              summaryNormal: {
                 contains: keywordsOnly[2],
               },
             },
@@ -216,7 +216,7 @@ export const SearchQuery = extendType({
             //   filterBySummary, 
             //   filterByExcerpt
             // ],
-            AND: [filterExcerptWideContext, filterExcerptWidePrimary],
+            AND: [filterSummaryNarrowContext, filterSummaryWidePrimary],
             // topicScore: {
             //   // gte: 0.4,
             //   gte: 0.1,
@@ -227,6 +227,7 @@ export const SearchQuery = extendType({
           //   // topicScore: "desc",
           //   loadSpeedScore: "asc",
           // },
+          take: 20
         });
 
         console.info("pageResults", pageResults);

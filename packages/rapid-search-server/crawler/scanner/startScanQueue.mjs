@@ -7,6 +7,9 @@ import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
+const blacklist = ["dreamwidth", "stackexchange", "livejournal"]
+const blacklistFilter = blacklist.map((item) => ({ content: { not: { contains: item } } }));
+
 export const startScanQueue = async () => {
   // console.info("workerData", workerData, parseInt(workerData.workerId) - 1);
   const skipItems = (workerData.workerId - 1) * 1;
@@ -17,7 +20,13 @@ export const startScanQueue = async () => {
     where: {
       analyzedDate: {
         not: null
-      }
+      },
+      backlinks: {
+        some: {
+          analyzedDate: null
+        }
+      },
+      AND: blacklistFilter
     },
     skip: skipItems,
     orderBy: {

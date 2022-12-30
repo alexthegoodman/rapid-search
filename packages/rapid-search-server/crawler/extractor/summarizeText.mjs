@@ -15,22 +15,22 @@ function cleanString(input) {
 }
 
 export const summarizeText = async (text) => {
-  try {
-    text = text.substr(0, 2000); // always max sized excerpt
-    text = string.sanitize.keepSpace(text); // clear error-prone junk
-    text = cleanString(text);
+  text = text.substr(0, 2000); // always max sized excerpt
+  text = string.sanitize.keepSpace(text); // clear error-prone junk
+  text = cleanString(text);
 
+  try {
     console.info("Sending text... ", text);
 
     const { data } = await axios.post("http://0.0.0.0:5000/summary", {
       text
-    }, { timeout: 10000 });
+    }, { timeout: 30000 });
 
     console.info("data", data);
 
     return { summary: data[0].summary_text };
   } catch (error) {
-    console.error(error.message);
+    console.error({ text, message: error.message  }); // TODO: tie message to sent text and url
     parentPort.postMessage("workerFinished");
     process.exit(2);
   }
