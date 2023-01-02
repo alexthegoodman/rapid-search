@@ -51,6 +51,19 @@ export const SearchResult = objectType({
       },
     });
 
+    t.list.field("media", {
+      type: "Media",
+      resolve: async (page, __, context: Context) => {
+        return await context.prisma.media.findMany({
+          where: {
+            page: {
+              id: page.id as string,
+            },
+          },
+        });
+      },
+    });
+
     t.field("topicScore", {
       type: "Float",
     });

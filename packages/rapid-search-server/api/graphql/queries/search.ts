@@ -42,130 +42,25 @@ export const SearchQuery = extendType({
           };
         }
 
-        const filterByTitle = {
-          AND: [
-            {
-              metaTitleNormal: {
-                contains: contextKeywordsOnly[0],
-              },
-            },
-            {
-              metaTitleNormal: {
-                contains: contextKeywordsOnly[1],
-              },
-            },
-            {
-              metaTitleNormal: {
-                contains: contextKeywordsOnly[2],
-              },
-            },
-            {
-              metaTitleNormal: {
-                contains: keywordsOnly[0],
-              },
-            },
-            {
-              metaTitleNormal: {
-                contains: keywordsOnly[1],
-              },
-            },
-            {
-              metaTitleNormal: {
-                contains: keywordsOnly[2],
-              },
-            },
-          ],
-        };
-
-        const filterBySummary = {
-          AND: [
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[0],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[1],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[2],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: keywordsOnly[0],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: keywordsOnly[1],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: keywordsOnly[2],
-              },
-            },
-          ],
-        };
-
-        const filterByExcerpt = {
-          AND: [
-            {
-              excerptNormal: {
-                contains: contextKeywordsOnly[0],
-              },
-            },
-            {
-              excerptNormal: {
-                contains: contextKeywordsOnly[1],
-              },
-            },
-            {
-              excerptNormal: {
-                contains: contextKeywordsOnly[2],
-              },
-            },
-            {
-              excerptNormal: {
-                contains: keywordsOnly[0],
-              },
-            },
-            {
-              excerptNormal: {
-                contains: keywordsOnly[1],
-              },
-            },
-            {
-              excerptNormal: {
-                contains: keywordsOnly[2],
-              },
-            },
-          ],
-        };
-
-        const filterSummaryWideContext = {
-          OR: [
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[0],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[1],
-              },
-            },
-            {
-              summaryNormal: {
-                contains: contextKeywordsOnly[2],
-              },
-            },
-          ],
-        };
+        // const filterSummaryWideContext = {
+        //   OR: [
+        //     {
+        //       summaryNormal: {
+        //         contains: contextKeywordsOnly[0],
+        //       },
+        //     },
+        //     {
+        //       summaryNormal: {
+        //         contains: contextKeywordsOnly[1],
+        //       },
+        //     },
+        //     {
+        //       summaryNormal: {
+        //         contains: contextKeywordsOnly[2],
+        //       },
+        //     },
+        //   ],
+        // };
 
         const filterSummaryNarrowContext = {
           AND: [
@@ -230,7 +125,7 @@ export const SearchQuery = extendType({
           take: 20
         });
 
-        console.info("pageResults", pageResults);
+        // console.info("pageResults", pageResults);
 
         return {
           contextKeywords: contextKeywordsOnly,

@@ -62,6 +62,14 @@ export interface NexusGenObjects {
     title?: string | null; // String
     url?: string | null; // String
   }
+  Media: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    lastAnalyzedDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    mimeType?: string | null; // String
+    type?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    url?: string | null; // String
+  }
   Query: {};
   SearchData: { // root type
     contextKeywords?: Array<string | null> | null; // [String]
@@ -102,6 +110,14 @@ export interface NexusGenFieldTypes {
     title: string | null; // String
     url: string | null; // String
   }
+  Media: { // field return type
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    lastAnalyzedDate: NexusGenScalars['DateTime'] | null; // DateTime
+    mimeType: string | null; // String
+    type: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    url: string | null; // String
+  }
   Query: { // field return type
     search: NexusGenRootTypes['SearchData'] | null; // SearchData
   }
@@ -115,6 +131,7 @@ export interface NexusGenFieldTypes {
     headline: string | null; // String
     id: string | null; // String
     loadSpeedScore: number | null; // Int
+    media: Array<NexusGenRootTypes['Media'] | null> | null; // [Media]
     metaDescription: string | null; // String
     metaTitle: string | null; // String
     summary: string | null; // String
@@ -135,6 +152,14 @@ export interface NexusGenFieldTypeNames {
     title: 'String'
     url: 'String'
   }
+  Media: { // field return type name
+    createdAt: 'DateTime'
+    lastAnalyzedDate: 'DateTime'
+    mimeType: 'String'
+    type: 'String'
+    updatedAt: 'DateTime'
+    url: 'String'
+  }
   Query: { // field return type name
     search: 'SearchData'
   }
@@ -148,6 +173,7 @@ export interface NexusGenFieldTypeNames {
     headline: 'String'
     id: 'String'
     loadSpeedScore: 'Int'
+    media: 'Media'
     metaDescription: 'String'
     metaTitle: 'String'
     summary: 'String'

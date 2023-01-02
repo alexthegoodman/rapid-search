@@ -24,6 +24,15 @@ type Link {
   url: String
 }
 
+type Media {
+  createdAt: DateTime
+  lastAnalyzedDate: DateTime
+  mimeType: String
+  type: String
+  updatedAt: DateTime
+  url: String
+}
+
 type Query {
   search(contextQuery: String!, query: String!, topicClassificationSlug: String): SearchData
 }
@@ -39,6 +48,7 @@ type SearchResult {
   headline: String
   id: String
   loadSpeedScore: Int
+  media: [Media]
   metaDescription: String
   metaTitle: String
   summary: String

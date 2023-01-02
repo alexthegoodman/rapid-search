@@ -14,6 +14,7 @@ const getMostCommon = (arr, size = 5) => {
 
   // https://stackoverflow.com/questions/1069666/sorting-object-property-by-values
   const entries = Object.entries(obj);
+  //console.info("most common", entries.sort(([, a], [, b]) => b - a))
   const sortable = entries
     .sort(([, a], [, b]) => b - a)
     .slice(0, size)

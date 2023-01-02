@@ -17,7 +17,7 @@ function cleanString(input) {
 export const summarizeText = async (text) => {
   text = text.substr(0, 2000); // always max sized excerpt
   text = string.sanitize.keepSpace(text); // clear error-prone junk
-  text = cleanString(text);
+  // text = cleanString(text); // removes too much puncuation
 
   try {
     console.info("Sending text... ", text);
