@@ -17,6 +17,7 @@ Additional:
 - `python -m spacy download en_core_web_md`
 - `npm install forever -g; forever start -d -c python3 application.py` 
 (Note: Runs in background. See `forever list` and `forever logs application.py` and `forever cleanlogs` will remove the verbose log files)
+- `forever stopall` and `sudo kill -9 `sudo lsof -t -i:5000``
 
 ## EC2
 
