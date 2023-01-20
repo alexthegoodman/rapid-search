@@ -7,7 +7,7 @@ import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
-const blacklist = ["dreamwidth", "stackexchange", "livejournal"]
+const blacklist = ["dreamwidth", "stackexchange", "livejournal", "tumblr"]
 const blacklistFilter = blacklist.map((item) => ({ content: { not: { contains: item } } }));
 
 export const startScanQueue = async () => {
