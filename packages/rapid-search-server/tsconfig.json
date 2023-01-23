@@ -6,5 +6,6 @@
     "lib": ["esnext"],
     "esModuleInterop": true,
     "allowJs": true
-  }
+  },
+  "exclude": ["./startCrawler.ts", "dist", "crawler", "seed"]
 }
