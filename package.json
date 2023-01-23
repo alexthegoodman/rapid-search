@@ -2,7 +2,8 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "start": "npm --prefix ./packages/rapid-search-server run start"
+    "start": "npm --prefix ./packages/rapid-search-server run start",
+    "postinstall": "npm --prefix ./packages/rapid-search-server install"
   },
   "devDependencies": {
     "lerna": "^4.0.0"
