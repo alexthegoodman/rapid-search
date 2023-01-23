@@ -1,6 +1,9 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "start": "npm --prefix ./packages/rapid-search-server run start"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
