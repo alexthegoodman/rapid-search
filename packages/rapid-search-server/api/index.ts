@@ -8,7 +8,7 @@ export const startApolloServer = async () => {
 
   server.applyMiddleware({ app });
 
-  await new Promise<void>((r) => app.listen({ port: 4001 }, r));
+  await new Promise<void>((r) => app.listen({ port: process.env.PORT ? process.env.PORT : 4001 }, r));
 
   console.info(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`);
 };
