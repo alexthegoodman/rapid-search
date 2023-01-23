@@ -2,6 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
+    "build": "npm --prefix ./packages/rapid-search-server run build",
     "start": "npm --prefix ./packages/rapid-search-server run start",
     "postinstall": "npm --prefix ./packages/rapid-search-server install"
   },
