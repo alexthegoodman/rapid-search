@@ -8,7 +8,15 @@ export const startApolloServer = async () => {
 
   server.applyMiddleware({ app });
 
-  await new Promise<void>((r) => app.listen({ port: process.env.PORT ? process.env.PORT : 4001 }, r));
+  const port = process.env.PORT
+    ? (process.env.PORT as unknown as number)
+    : 4001;
 
-  console.info(`🚀 Server ready at http://localhost:4001${server.graphqlPath}`);
+  const host = "0.0.0.0";
+
+  await new Promise<void>((r) => app.listen(port, host, r));
+
+  console.info(
+    `🚀 Server ready at http://${host}:${port}${server.graphqlPath}`
+  );
 };
