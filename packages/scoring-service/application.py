@@ -6,7 +6,7 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource
-from resources import SummaryResource
+from resources import GeneratorResource
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
@@ -17,8 +17,9 @@ api = Api(app)
 print("Adding Resources...")
 
 # api.add_resource(TopicResource, '/topic')
-api.add_resource(SummaryResource, '/summary')
+# api.add_resource(SummaryResource, '/summary')
 # api.add_resource(KeywordResource, '/keywords')
+api.add_resource(GeneratorResource, '/generator')
 
 @app.errorhandler(Exception)          
 def basic_error(e): 
