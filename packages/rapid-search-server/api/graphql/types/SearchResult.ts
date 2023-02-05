@@ -64,6 +64,19 @@ export const SearchResult = objectType({
       },
     });
 
+    t.list.field("outgoingLinks", {
+      type: "Backlink",
+      resolve: async (page, __, context: Context) => {
+        return await context.prisma.backlink.findMany({
+          where: {
+            originUrl: {
+              equals: page.url as string,
+            },
+          },
+        });
+      },
+    });
+
     t.field("topicScore", {
       type: "Float",
     });

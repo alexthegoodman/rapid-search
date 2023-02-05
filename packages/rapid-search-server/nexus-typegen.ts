@@ -52,6 +52,15 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
+  Backlink: { // root type
+    analyzedDate?: NexusGenScalars['DateTime'] | null; // DateTime
+    count?: number | null; // Int
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id?: string | null; // String
+    originUrl?: string | null; // String
+    targetUrl?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Interest: { // root type
     generatedInterestSlug?: string | null; // String
     id?: string | null; // String
@@ -100,6 +109,15 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Backlink: { // field return type
+    analyzedDate: NexusGenScalars['DateTime'] | null; // DateTime
+    count: number | null; // Int
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: string | null; // String
+    originUrl: string | null; // String
+    targetUrl: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+  }
   Interest: { // field return type
     generatedInterestSlug: string | null; // String
     id: string | null; // String
@@ -135,6 +153,7 @@ export interface NexusGenFieldTypes {
     media: Array<NexusGenRootTypes['Media'] | null> | null; // [Media]
     metaDescription: string | null; // String
     metaTitle: string | null; // String
+    outgoingLinks: Array<NexusGenRootTypes['Backlink'] | null> | null; // [Backlink]
     summary: string | null; // String
     topicClassification: NexusGenRootTypes['Interest'] | null; // Interest
     topicScore: number | null; // Float
@@ -143,6 +162,15 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
+  Backlink: { // field return type name
+    analyzedDate: 'DateTime'
+    count: 'Int'
+    createdAt: 'DateTime'
+    id: 'String'
+    originUrl: 'String'
+    targetUrl: 'String'
+    updatedAt: 'DateTime'
+  }
   Interest: { // field return type name
     generatedInterestSlug: 'String'
     id: 'String'
@@ -178,6 +206,7 @@ export interface NexusGenFieldTypeNames {
     media: 'Media'
     metaDescription: 'String'
     metaTitle: 'String'
+    outgoingLinks: 'Backlink'
     summary: 'String'
     topicClassification: 'Interest'
     topicScore: 'Float'

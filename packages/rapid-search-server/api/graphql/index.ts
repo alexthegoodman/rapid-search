@@ -1,3 +1,4 @@
+export * from "./types/Backlink";
 export * from "./types/Link";
 export * from "./types/Interest";
 export * from "./types/SearchResult";
