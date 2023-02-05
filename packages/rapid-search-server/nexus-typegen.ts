@@ -119,6 +119,7 @@ export interface NexusGenFieldTypes {
     url: string | null; // String
   }
   Query: { // field return type
+    baseSearch: Array<NexusGenRootTypes['SearchResult'] | null> | null; // [SearchResult]
     search: NexusGenRootTypes['SearchData'] | null; // SearchData
   }
   SearchData: { // field return type
@@ -161,6 +162,7 @@ export interface NexusGenFieldTypeNames {
     url: 'String'
   }
   Query: { // field return type name
+    baseSearch: 'SearchResult'
     search: 'SearchData'
   }
   SearchData: { // field return type name
@@ -185,6 +187,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Query: {
+    baseSearch: { // args
+      query: string; // String!
+    }
     search: { // args
       contextQuery: string; // String!
       query: string; // String!

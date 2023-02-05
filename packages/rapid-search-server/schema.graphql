@@ -34,6 +34,7 @@ type Media {
 }
 
 type Query {
+  baseSearch(query: String!): [SearchResult]
   search(contextQuery: String!, query: String!, topicClassificationSlug: String): SearchData
 }
 

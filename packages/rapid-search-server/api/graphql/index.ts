@@ -5,3 +5,4 @@ export * from "./types/SearchData";
 export * from "./types/Media";
 
 export * from "./queries/search";
+export * from "./queries/baseSearch";
