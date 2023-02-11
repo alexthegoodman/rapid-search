@@ -45,6 +45,11 @@ export const BaseSearchQuery = extendType({
           //   // topicScore: "desc",
           //   loadSpeedScore: "asc",
           // },
+          orderBy: {
+            domain: {
+              analyzedDate: "desc",
+            },
+          },
           take: 20,
         });
 
