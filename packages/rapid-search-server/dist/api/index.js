@@ -43,7 +43,7 @@ exports.startApolloServer = void 0;
 var express_1 = __importDefault(require("express"));
 var server_1 = require("./server");
 var startApolloServer = function () { return __awaiter(void 0, void 0, void 0, function () {
-    var app;
+    var app, port, host;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0: return [4 /*yield*/, server_1.server.start()];
@@ -51,10 +51,14 @@ var startApolloServer = function () { return __awaiter(void 0, void 0, void 0, f
                 _a.sent();
                 app = (0, express_1["default"])();
                 server_1.server.applyMiddleware({ app: app });
-                return [4 /*yield*/, new Promise(function (r) { return app.listen({ port: process.env.PORT ? process.env.PORT : 4001 }, r); })];
+                port = process.env.PORT
+                    ? process.env.PORT
+                    : 4001;
+                host = "0.0.0.0";
+                return [4 /*yield*/, new Promise(function (r) { return app.listen(port, host, r); })];
             case 2:
                 _a.sent();
-                console.info("\uD83D\uDE80 Server ready at http://localhost:4001".concat(server_1.server.graphqlPath));
+                console.info("\uD83D\uDE80 Server ready at http://".concat(host, ":").concat(port).concat(server_1.server.graphqlPath));
                 return [2 /*return*/];
         }
     });
