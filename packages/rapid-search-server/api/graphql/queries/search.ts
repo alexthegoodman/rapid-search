@@ -22,8 +22,8 @@ export const SearchQuery = extendType({
         x
       ) => {
         console.info("incoming search");
-        contextQuery = contextQuery.replace(/&nbsp;/g, '');
-        query = query.replace(/&nbsp;/g, ' ');
+        contextQuery = contextQuery.replace(/&nbsp;/g, "");
+        query = query.replace(/&nbsp;/g, " ");
 
         const { keywords: contextKeywords, keywordsOnly: contextKeywordsOnly } =
           await extractKeywords(contextQuery, 3);
@@ -103,8 +103,8 @@ export const SearchQuery = extendType({
                 contains: keywordsOnly[2],
               },
             },
-          ]
-        }
+          ],
+        };
 
         const filterSummaryNarrowPrimary = {
           AND: [
@@ -126,19 +126,13 @@ export const SearchQuery = extendType({
           ],
         };
 
-        let filters = [filterSummaryNarrowContext, filterSummaryWidePrimary]
+        let filters = [filterSummaryNarrowContext, filterSummaryWidePrimary];
         if (contextQuery === "") {
           filters = [filterSummaryNarrowPrimary];
         }
 
         const pageResults = await prisma.page.findMany({
           where: {
-            // return pages where the summary contains the top 3 query keywords
-            // OR: [
-            //   filterByTitle, 
-            //   filterBySummary, 
-            //   filterByExcerpt
-            // ],
             AND: filters,
             // topicScore: {
             //   // gte: 0.4,
@@ -150,7 +144,7 @@ export const SearchQuery = extendType({
           //   // topicScore: "desc",
           //   loadSpeedScore: "asc",
           // },
-          take: 20
+          take: 20,
         });
 
         console.info("pageResults", pageResults);
