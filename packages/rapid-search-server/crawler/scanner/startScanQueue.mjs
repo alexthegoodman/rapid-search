@@ -7,8 +7,16 @@ import { DateTime } from "luxon";
 
 const prisma = new PrismaClient();
 
-const blacklist = ["dreamwidth", "stackexchange", "livejournal", "tumblr"]
-const blacklistFilter = blacklist.map((item) => ({ content: { not: { contains: item } } }));
+const blacklist = [
+  "dreamwidth",
+  "stackexchange",
+  "livejournal",
+  "tumblr",
+  "blogspot",
+];
+const blacklistFilter = blacklist.map((item) => ({
+  content: { not: { contains: item } },
+}));
 
 export const startScanQueue = async () => {
   // console.info("workerData", workerData, parseInt(workerData.workerId) - 1);
@@ -19,40 +27,40 @@ export const startScanQueue = async () => {
   const targetDomain = await prisma.domain.findFirst({
     where: {
       analyzedDate: {
-        not: null
+        not: null,
       },
       backlinks: {
         some: {
-          analyzedDate: null
-        }
+          analyzedDate: null,
+        },
       },
-      AND: blacklistFilter
+      AND: blacklistFilter,
     },
     skip: skipItems,
     orderBy: {
-      analyzedDate: "asc"
-    }
+      analyzedDate: "asc",
+    },
   });
 
   await prisma.domain.update({
     where: {
-      id: targetDomain.id
+      id: targetDomain.id,
     },
     data: {
-      analyzedDate: DateTime.now().toISO()
-    }
-  })
+      analyzedDate: DateTime.now().toISO(),
+    },
+  });
 
   console.info("targetDomain ", targetDomain.content);
 
   let queueItems = await prisma.backlink.findMany({
     where: {
       targetDomain: {
-        id: targetDomain.id
+        id: targetDomain.id,
       },
       analyzedDate: {
-        equals: null
-      }
+        equals: null,
+      },
     },
     take: 10,
     orderBy: {
@@ -60,17 +68,17 @@ export const startScanQueue = async () => {
     },
   });
 
-  console.info("Backlinks collected... ", queueItems.length)
+  console.info("Backlinks collected... ", queueItems.length);
 
   if (queueItems.length === 0) {
-    console.warn("No backlinks!")
+    console.warn("No backlinks!");
     parentPort.postMessage("workerFinished");
     return;
   }
 
   // console.info("startScanQueue queueItems", queueItems);
-  console.info("Create pagescanner")
-  
+  console.info("Create pagescanner");
+
   var currentItem = 0;
   const pageScanner = () =>
     new Promise(async (resolve, reject) => {
